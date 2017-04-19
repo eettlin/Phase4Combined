@@ -58,6 +58,14 @@ class Game {
     this.mouseY = 0;
     this.w = 20;
     this.done = false;
+
+    //panelthings
+    this.panel = new Panel(this.towerGame, 100,-500)
+    this.panelVar1 = false
+    this.panel.ceatebutton("1")
+    this.panel.ceatebutton("2")
+    this.panel.ceatebutton("3")
+
     // containerarrays for cells
     this.grid = [];
     this.cols = Math.floor(this.canvas.width / this.w);
@@ -105,6 +113,9 @@ class Game {
     this.context.font = "14px sans-serif";
     this.context.fillText("Press the E key to send enemies", 20, this.canvas.height-20);
     this.context.restore();
+
+    //more panelthings
+    this.panel.render()
   }
 
   render() { // draw game stuff
