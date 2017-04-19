@@ -56,7 +56,7 @@ class Game {
 
     this.mouseX = 0;
     this.mouseY = 0;
-    this.w = 20;
+    this.w = 50;
     this.done = false;
     // containerarrays for cells
     this.grid = [];
@@ -119,7 +119,7 @@ class Game {
     // An adjacent neighbor has a step of 10
     // and a diagonal neighbor has a step of 14.
 
-  brushfire() {
+  brushfire(undo) { //if brushfire fails to make a valid map undo will be called
     // Initialize each cell in the grid to have a distance that
     // is the greatest possible.  Initialize each cell to
     // have no parent and populate it's array of neighbors
@@ -159,13 +159,22 @@ class Game {
                 }
           }     // for each neighbor
         }   // while(queue.length)
+    if(!this.validMap()){
+      if(undo){
+          undo()
+          this.brushfire()
+      }else{
+        // delete any enemy that is currently in a cell without a parent
+        for(let i = 0; i < this.enemies.length;  i++) {
+            let enemy = towerGame.enemies[i];
+            if(!enemy.currentCell.parent)
+                enemy.kill = true;    // kill the orphans
+            }
+            console.log("brushfire created an invalid map and no undo was inputed")
 
-    // delete any enemy that is currently in a cell without a parent
-    for(let i = 0; i < this.enemies.length;  i++) {
-        let enemy = towerGame.enemies[i];
-        if(!enemy.currentCell.parent)
-            enemy.kill = true;    // kill the orphans
-        }
+      }
+    }
+
 
         // give each cell a vector that points to its parent
 //       for(var i = 0; i < this.cols; i++){
@@ -175,7 +184,32 @@ class Game {
 //       }
 
     }
+    //check the map to see if there are cells without parents
+    validMap() {
+      for(var i = 0; i < this.cols; i++){
+        for(var j = 0; j < this.rows; j++){
+          var cell = this.grid[i][j];
+          if(!cell.parent && !(cell.occupied || cell.hasTower)&& cell!=this.root){
+            return false;
 
+          }
+        }
+      }
+      return true;
+    }
+    //undo an invalid map action
+    undo(cell,tower) {
+      if(tower){
+        return function() {
+          cell.hasTower=false;
+          towerGame.towers.splice(towerGame.towers.indexOf(tower),1)
+        }
+      }else{
+        return function() {
+          cell.occupied=false
+        }
+      }
+    }
     // sendEnemies()
     // Send a random number of enemies, up to 5, each from a random location
     // in the top half of the grid.  About half of the enemies will take the
@@ -307,10 +341,11 @@ class Game {
     // Some money required but also cannot place tower on a cell
     // of the grid that is occupied or is the root cell
     if(towerGame.placingTower) {
-        if(!cell.occupied && !cell.hasTower && cell != towerGame.root)
-            return true;
-      }
-    return(false);
+        if(!cell.occupied && !cell.hasTower && cell != towerGame.root){
+          return true;
+        }
+      return(false);
+    }
   }
 
   createTower(mtd) { // menu turret div
@@ -336,7 +371,7 @@ class Game {
     // placing a tower makes the cell containing the tower
     // unavailable to enemies the same as if it were
     // occupied (blocked)
-    towerGame.brushfire();   // all new distances and parents
+    towerGame.brushfire(towerGame.undo(cell,towerGame.towers[towerGame.towers.length-1]));   // all new distances and parents
   }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ load callbacks
@@ -405,7 +440,7 @@ class Game {
     else if(!towerGame.placingTower && !cell.hasTower) {
         // toggle the occupied property of the clicked cell
         cell.occupied = !cell.occupied;
-        towerGame.brushfire();   // all new distances and parents
+        towerGame.brushfire(towerGame.undo(cell));   // all new distances and parents
         }
   }
   //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Other

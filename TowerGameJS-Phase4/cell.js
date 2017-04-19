@@ -9,7 +9,7 @@ class Cell{
     this.neighbors = [];
     this.occupied = false;
     this.parent = 0;  //  this is the parent cell
-    this.dist = -1; 
+    this.dist = -1;
     this.vec = null;
     this.hasTower = false;
 
@@ -33,16 +33,17 @@ class Cell{
         ctx.stroke();
         }
 
+
     // draw vector
-//     if(this.vec && !this.occupied){
-//       this.game.context.beginPath();
-//       this.game.context.moveTo(this.center.x, this.center.y);
-//       this.game.context.lineTo(this.center.x + this.vec.x, this.center.y + this.vec.y);
-//       this.game.context.stroke();
-// 
-//     }
-//            
-//     this.getText();
+    // if(this.vec && !this.occupied){
+    //   this.game.context.beginPath();
+    //   this.game.context.moveTo(this.center.x, this.center.y);
+    //   this.game.context.lineTo(this.center.x + this.vec.x, this.center.y + this.vec.y);
+    //   this.game.context.stroke();
+    //
+    // }
+
+  //  this.getText();
   }
 
     // addNeighbors()
@@ -52,7 +53,7 @@ class Cell{
     // For example, a southeast neighbor might not be occupied
     // but if east and south are both occupied then southeast is blocked
     // and not considered to be a neighbor.
-    
+
   addNeighbors(game, grid){
     this.neighbors = [];    // start with empty neighbors
     let col = this.loc.x/game.w;
