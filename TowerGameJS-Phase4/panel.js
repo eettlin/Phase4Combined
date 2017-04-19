@@ -20,11 +20,9 @@ class Panel{
   }
 
   render(){
-    this.thing.style.top = this.y+"px"
+    let temp = lerp(this.thing.style.top,0,.05)
+    this.thing.style.top = temp+"px"
     this.thing.style.left = this.x+"px"
-    if(this.y <= 0){
-      this.y += 5
-    }
     //this.ctx.drawImage(this.pImg, this.pLoc.x, this.pLoc.y)
     //this.pLoc.vec.y += 1
   }
@@ -42,6 +40,10 @@ class Panel{
     this.game.panelVar1 = true;
     console.log(this.game.panelVar1)
     this.game.panelVar1 = false;
+  }
+
+  lerp( a,  b,  f){
+    return a + f * (b - a)
   }
 
 }
