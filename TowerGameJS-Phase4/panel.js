@@ -17,12 +17,12 @@ class Panel{
       this.wrapper = document.getElementById('wrapperDiv')
       this.wrapper.appendChild(this.thing)
       this.thing.appendChild(this.pImg);
+      this.temp = 0
   }
 
   render(){
-    let temp = lerp(this.thing.style.top,0,.05)
-    this.thing.style.top = temp+"px"
-    this.thing.style.left = this.x+"px"
+    this.temp = this.lerp(this.thing.style.top,0,.05)
+    this.thing.style.top = this.temp+"px"
     //this.ctx.drawImage(this.pImg, this.pLoc.x, this.pLoc.y)
     //this.pLoc.vec.y += 1
   }
