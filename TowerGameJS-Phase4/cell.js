@@ -82,25 +82,25 @@ class Cell{
     }
     if( col < game.cols-1 &&  row > 0){           //  NE
         ne = grid[col+1][row-1];
-        if(!ne.occupied && !(n && (n.occupied || n.hasTower) && e && (e.occupied || e.hasTower))){
+        if(!ne.occupied && !ne.hasTower && !(n && (n.occupied || n.hasTower) && e && (e.occupied || e.hasTower))){
             this.neighbors.push(ne);
             }
     }
      if(col < game.cols-1 &&  row < game.rows-1){      //  SE
         se = grid[col+1][row+1];
-        if(!se.occupied && !(e && (e.occupied || e.hasTower) && s && (s.occupied || s.hasTower))){
+        if(!se.occupied && !se.hasTower && !(e && (e.occupied || e.hasTower) && s && (s.occupied || s.hasTower))){
             this.neighbors.push(se);
             }
     }
     if(col > 0 &&  row < game.rows-1 ){             //  SW
         sw = grid[col-1][row+1];
-        if(!sw.occupied && !(s && (s.occupied || s.hasTower) && w && (w.occupied || w.hasTower))){
+        if(!sw.occupied && !sw.hasTower && !(s && (s.occupied || s.hasTower) && w && (w.occupied || w.hasTower))){
             this.neighbors.push(sw);
             }
     }
     if(col > 0 && row > 0){                     //  NW
         nw = grid[col-1][row-1];
-        if(!nw.occupied && !(w && (w.occupied || w.hasTower) && n && (n.occupied || n.hasTower))){
+        if(!nw.occupied && !nw.hasTower && !(w && (w.occupied || w.hasTower) && n && (n.occupied || n.hasTower))){
             this.neighbors.push(nw);
             }
         }
