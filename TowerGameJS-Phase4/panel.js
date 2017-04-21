@@ -9,20 +9,24 @@ class Panel{
       this.pImg.src = this.imgName;
       this.thing = document.createElement("div")
       this.thing.id = "panel"
-      this.thing.style.width = this.pImg.width+"px"
-      this.thing.style.height = this.pImg.height+"px"
+      this.thing.style.width = 1000+"px"
+      this.thing.style.height = 1000+"px"
       this.thing.style.position = "absolute"
+      this.thing.style.backgroundImage = 'woodPanel.jpg'
       this.thing.style.top = this.y+"px"
       this.thing.style.left = this.x+"px"
       this.wrapper = document.getElementById('wrapperDiv')
       this.wrapper.appendChild(this.thing)
-      this.thing.appendChild(this.pImg);
+      //this.thing.appendChild(this.pImg);
       this.temp = 0
   }
 
   render(){
-    this.temp = this.lerp(this.thing.style.top,0,.05)
-    this.thing.style.top = this.temp+"px"
+    //this.temp = lerp(this.thing.style.top,0,.05)
+    this.thing.style.top = this.y+"px"
+    this.thing.style.left = this.x+"px"
+    if(this.y <= 100)
+    this.y += 5
     //this.ctx.drawImage(this.pImg, this.pLoc.x, this.pLoc.y)
     //this.pLoc.vec.y += 1
   }
