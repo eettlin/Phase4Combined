@@ -56,7 +56,7 @@ class Game {
 
     this.mouseX = 0;
     this.mouseY = 0;
-    this.w = 50;
+    this.w = 20;
     this.done = false;
     // containerarrays for cells
     this.grid = [];
@@ -202,11 +202,13 @@ class Game {
       if(tower){
         return function() {
           cell.hasTower=false;
-          towerGame.towers.splice(towerGame.towers.indexOf(tower),1)
+          towerGame.towers.splice(towerGame.towers.indexOf(tower))
+          alert("you cannot place a tower here")
         }
       }else{
         return function() {
-          cell.occupied=false
+          cell.occupied= !cell.occupied
+          alert("performing that action would create an invalid grid")
         }
       }
     }
@@ -242,7 +244,7 @@ class Game {
       for(let i = this.enemies.length-1; i >= 0; i--) {
         if(this.enemies[i].kill)
             this.enemies.splice(i,1);   // delete this dead enemy
-        else this.enemies[i].run();
+        
         }
     }
 
@@ -287,9 +289,7 @@ class Game {
       this.grid[i] = [];
       for(var j = 0; j < this.rows; j++){
         this.grid[i][j] = new Cell(this, vector2d((i*this.w), (j*this.w)), ++cellId);
-        // make 10% of the cells occupied
-        if(this.grid[i][j] != this.root && Math.floor(Math.random()*100) < 10)
-            this.grid[i][j].occupied = true;
+
       }
     }
 
