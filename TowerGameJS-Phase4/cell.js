@@ -33,16 +33,17 @@ class Cell{
         ctx.stroke();
         }
 
+
     // draw vector
-//     if(this.vec && !this.occupied){
-//       this.game.context.beginPath();
-//       this.game.context.moveTo(this.center.x, this.center.y);
-//       this.game.context.lineTo(this.center.x + this.vec.x, this.center.y + this.vec.y);
-//       this.game.context.stroke();
-//
-//     }
-//
-//     this.getText();
+    // if(this.vec && !this.occupied){
+    //   this.game.context.beginPath();
+    //   this.game.context.moveTo(this.center.x, this.center.y);
+    //   this.game.context.lineTo(this.center.x + this.vec.x, this.center.y + this.vec.y);
+    //   this.game.context.stroke();
+    //
+    // }
+
+  //  this.getText();
   }
 
     // addNeighbors()

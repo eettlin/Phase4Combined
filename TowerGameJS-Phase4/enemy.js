@@ -50,12 +50,12 @@ class Enemy {
     var ctx = this.game.context;
 
 
-    // if(this.randomPath)
-    //     ctx.fillStyle = 'blue';
-    // else ctx.fillStyle = 'green';
-    // ctx.beginPath();
-    // ctx.ellipse(this.loc.x, this.loc.y, this.radius, this.radius, 0, 2*Math.PI, false);
-    // ctx.fill();
+    if(this.randomPath)
+        ctx.fillStyle = 'blue';
+    else ctx.fillStyle = 'green';
+    ctx.beginPath();
+    ctx.ellipse(this.loc.x, this.loc.y, this.radius, this.radius, 0, 2*Math.PI, false);
+    ctx.fill();
   }
 
     // update()
