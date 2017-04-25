@@ -62,9 +62,9 @@ class Game {
     //panelthings
     this.panel = new Panel(this.towerGame, 100,-500)
     this.panelVar1 = false
-    this.panel.ceatebutton("1")
-    this.panel.ceatebutton("2")
-    this.panel.ceatebutton("3")
+    this.panel.ceatebutton("this is button 1")
+    this.panel.ceatebutton("this is button 2")
+    this.panel.ceatebutton("this is button 3")
 
     // containerarrays for cells
     this.grid = [];
@@ -255,7 +255,7 @@ class Game {
       for(let i = this.enemies.length-1; i >= 0; i--) {
         if(this.enemies[i].kill)
             this.enemies.splice(i,1);   // delete this dead enemy
-        
+
         }
     }
 

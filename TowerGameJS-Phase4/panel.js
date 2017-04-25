@@ -12,13 +12,14 @@ class Panel{
       this.thing.style.width = 1000+"px"
       this.thing.style.height = 1000+"px"
       this.thing.style.position = "absolute"
-      this.thing.style.backgroundImage = 'woodPanel.jpg'
+      this.thing.style.backgroundImage = 'url("woodPanel.jpg")'
       this.thing.style.top = this.y+"px"
       this.thing.style.left = this.x+"px"
       this.wrapper = document.getElementById('wrapperDiv')
       this.wrapper.appendChild(this.thing)
       //this.thing.appendChild(this.pImg);
       this.temp = 0
+      this.intcrament  = 0
   }
 
   render(){
@@ -33,9 +34,11 @@ class Panel{
 
   ceatebutton(texts){
     this.button = document.createElement("button")
-    this.button.style.onclick = "clickedButton()"
+    //this.button.addEventListener('click',this.clickedButton(), false)
     //this.button.addEventListener('click', clickedButton(), false).
     this.button.innerHTML = texts
+    this.button.id = this.intcrament
+    this.intcrament += 1
     this.thing.appendChild(this.button)
   }
 
