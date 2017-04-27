@@ -1,3 +1,4 @@
+"use strict"
 class Panel{
   constructor(game, x,y){
       this.x = x
@@ -35,24 +36,24 @@ class Panel{
   ceatebutton(texts){
     this.button = document.createElement("button")
     this.button.panelVar = false
-    //this.button.addEventListener('click', this.clickedButton(this.game), false)
+    this.button.addEventListener('click',this.clickedButton, false)
+    /*
     this.button.addEventListener('click',
     function(){
       this.panelVar = true;
       console.log(this.panelVar + document.getElementById(this.id).id)
       }, false)
+      */
     this.button.innerHTML = texts
     this.button.id = this.intcrament
     this.intcrament += 1
     this.thing.appendChild(this.button)
   }
 
-  clickedButton(game){
-    console.log(game.panelVar1)
-    game.panelVar1 = true;
-    console.log(game.panelVar1)
-    game.panelVar1 = false;
-    console.log(game.panelVar1)
+  clickedButton(){
+    console.log(this.panelVar+document.getElementById(this.id).id)
+    this.panelVar = !this.panelVar;
+    console.log(this.panelVar+document.getElementById(this.id).id)
   }
 
   lerp( a,  b,  f){
