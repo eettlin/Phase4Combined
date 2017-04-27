@@ -31,6 +31,9 @@ class Game {
     this.enemies = [];
     this.bullets = [];
     this.bankValue = 500;
+    this.score = 0;
+    this.wave = 0;
+    this.health = 100;
     this.canvas = document.createElement("canvas");
     if(!this.canvas || !this.canvas.getContext)
         throw "No valid canvas found!";
@@ -238,6 +241,15 @@ class Game {
       }else if(info.innerHTML.indexOf('Time') != -1){
         info.innerHTML = 'Time <br/>' + time;
       }
+      if(info.innerHTML.indexOf('Score') != -1){
+        info.innerHTML = 'Score <br/>' + this.score;
+      }
+      if(info.innerHTML.indexOf('Wave') != -1){
+        info.innerHTML = 'Wave <br/>' + this.wave;
+      }
+      if(info.innerHTML.indexOf('Health') != -1){
+        info.innerHTML = 'Health <br/>' + this.health;
+      }
     }
   }
 
@@ -289,7 +301,7 @@ class Game {
       mtd.cnvBulImg.src = cnvBulImgPath;    // start loading image
 
       document.getElementById("menuDiv").appendChild(mtd);
-    
+
 
       mtd.cost = 100*i +50;
       mtd.id = 'towImgDiv' + i;
