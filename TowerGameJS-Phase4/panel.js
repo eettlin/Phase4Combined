@@ -4,13 +4,13 @@ class Panel{
       this.y = y
       this.pImg = new Image();
       this.pImg.addEventListener('error', function() { console.log(this.imgName + " failed to load"); }, false);
-
+      this.game=game
       this.imgName = 'woodPanel.jpg'; // large image for menu tile
       this.pImg.src = this.imgName;
       this.thing = document.createElement("div")
       this.thing.id = "panel"
-      this.thing.style.width = 1000+"px"
-      this.thing.style.height = 1000+"px"
+      this.thing.style.width = 1024+"px"
+      this.thing.style.height = 768+"px"
       this.thing.style.position = "absolute"
       this.thing.style.backgroundImage = 'url("woodPanel.jpg")'
       this.thing.style.top = this.y+"px"
@@ -34,19 +34,25 @@ class Panel{
 
   ceatebutton(texts){
     this.button = document.createElement("button")
-    //this.button.addEventListener('click',this.clickedButton(), false)
-    //this.button.addEventListener('click', clickedButton(), false).
+    this.button.panelVar = false
+    //this.button.addEventListener('click', this.clickedButton(this.game), false)
+    this.button.addEventListener('click',
+    function(){
+      this.panelVar = true;
+      console.log(this.panelVar + document.getElementById(this.id).id)
+      }, false)
     this.button.innerHTML = texts
     this.button.id = this.intcrament
     this.intcrament += 1
     this.thing.appendChild(this.button)
   }
 
-  clickedButton(){
-    console.log(this.game.panelVar1)
-    this.game.panelVar1 = true;
-    console.log(this.game.panelVar1)
-    this.game.panelVar1 = false;
+  clickedButton(game){
+    console.log(game.panelVar1)
+    game.panelVar1 = true;
+    console.log(game.panelVar1)
+    game.panelVar1 = false;
+    console.log(game.panelVar1)
   }
 
   lerp( a,  b,  f){

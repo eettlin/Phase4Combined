@@ -11,6 +11,9 @@ var cellId = 0;
 function setup() {
   towerGame = new Game();
   window.setTimeout(draw, 100);    // wait 100ms for resources to load then start draw loop
+
+  //panelthings
+
 }
 
 function draw() {   // the animation loop
@@ -60,11 +63,12 @@ class Game {
     this.done = false;
 
     //panelthings
-    this.panel = new Panel(this.towerGame, 100,-500)
+    this.panel = new Panel(this, 100,-500)
     this.panelVar1 = false
-    this.panel.ceatebutton("this is button 1")
-    this.panel.ceatebutton("this is button 2")
-    this.panel.ceatebutton("this is button 3")
+
+      this.panel.ceatebutton("this is button 1")
+      this.panel.ceatebutton("this is button 2")
+      this.panel.ceatebutton("this is button 3")
 
     // containerarrays for cells
     this.grid = [];
