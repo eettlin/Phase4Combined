@@ -54,8 +54,8 @@ class Game {
         if(evt.key == "E" || evt.key == "e")
             towerGame.sendEnemies();
         }, false);
-    this.difficulty=0
-    this.wave=new Wave(this,this.difficulty)
+    this.currentWaveNum=0
+    this.wave=new Wave(this,AllWaves[0])
 
     this.mouseX = 0;
     this.mouseY = 0;
@@ -245,9 +245,10 @@ class Game {
     controlWaves() {
       if(this.wave.isWaveOver()){
         console.log(this.wave.isWaveOver())
-        this.difficulty+=1
-        this.wave=new Wave(this,this.difficulty)
-        this.wave.startWave()
+        this.currentWaveNum+=1
+        this.wave=new Wave(this,AllWaves[this.currentWaveNum])
+      }else{
+        this.wave.run()
       }
     }
     // Delete any enemies that have died
