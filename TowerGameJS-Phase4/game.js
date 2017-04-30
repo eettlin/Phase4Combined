@@ -30,6 +30,7 @@ class Game {
     this.towers = [];
     this.enemies = [];
     this.bullets = [];
+
     this.bankValue = 500;
     this.canvas = document.createElement("canvas");
     if(!this.canvas || !this.canvas.getContext)
@@ -53,6 +54,8 @@ class Game {
         if(evt.key == "E" || evt.key == "e")
             towerGame.sendEnemies();
         }, false);
+    this.currentWaveNum=0
+    this.wave=new Wave(this,AllWaves[0])
 
     this.mouseX = 0;
     this.mouseY = 0;
@@ -78,6 +81,7 @@ class Game {
     this.updateInfoElements(gt);
     this.removeBullets();
     this.removeEnemies();
+    this.controlWaves()
     if (this.isRunning) {
       this.render();
     }
@@ -238,13 +242,20 @@ class Game {
                 }
             }
     }
-
+    controlWaves() {
+      if(this.wave.isWaveOver()){
+        this.currentWaveNum+=1
+        this.wave=new Wave(this,AllWaves[this.currentWaveNum])
+      }else{
+        this.wave.run()
+      }
+    }
     // Delete any enemies that have died
     removeEnemies() {
       for(let i = this.enemies.length-1; i >= 0; i--) {
         if(this.enemies[i].kill)
             this.enemies.splice(i,1);   // delete this dead enemy
-        
+
         }
     }
 
