@@ -244,7 +244,6 @@ class Game {
     }
     controlWaves() {
       if(this.wave.isWaveOver()){
-        console.log(this.wave.isWaveOver())
         this.currentWaveNum+=1
         this.wave=new Wave(this,AllWaves[this.currentWaveNum])
       }else{
