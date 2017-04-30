@@ -173,7 +173,7 @@ AllWaves=[
           ]
         },
         "num":Infinity,
-        "enemyIncrement":.1,
+        "enemyIncrement":1,
         "packetIncrement":1
       },
       {
@@ -197,7 +197,7 @@ AllWaves=[
       }
     ],
     "name":"infinite wave",
-    "waveIncrement":3,
+    "waveIncrement":30,
     "info":"this wave should always be the last wave"
   }
 ]
