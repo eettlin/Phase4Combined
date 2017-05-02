@@ -58,7 +58,7 @@ class Game {
             towerGame.sendEnemies();
         }, false);
     this.currentWaveNum=0
-    this.wave=new Wave(this,AllWaves[0])
+    this.wave=new Wave(this,AllWaves[this.currentWaveNum])
 
     this.mouseX = 0;
     this.mouseY = 0;
@@ -292,7 +292,7 @@ class Game {
         info.innerHTML = 'Score <br/>' + this.score;
       }
       if(info.innerHTML.indexOf('Wave') != -1){
-        info.innerHTML = 'Wave <br/>' + this.wave;
+        info.innerHTML = 'Wave <br/>' + this.wave.waveJson.name;
       }
       if(info.innerHTML.indexOf('Health') != -1){
         info.innerHTML = 'Health <br/>' + this.health;
