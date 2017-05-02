@@ -32,6 +32,9 @@ class Game {
     this.bullets = [];
 
     this.bankValue = 500;
+    this.score = 0;
+    this.wave = 0;
+    this.health = 100;
     this.canvas = document.createElement("canvas");
     if(!this.canvas || !this.canvas.getContext)
         throw "No valid canvas found!";
@@ -279,8 +282,20 @@ class Game {
       // change the html content after condition--use indexOf
       if(info.innerHTML.indexOf('Bank') != -1){
         info.innerHTML = 'Bank <br/>' + this.bankValue;
+        if(this.bankValue < 0){
+          this.bankValue == 0;
+        }
       }else if(info.innerHTML.indexOf('Time') != -1){
         info.innerHTML = 'Time <br/>' + time;
+      }
+      if(info.innerHTML.indexOf('Score') != -1){
+        info.innerHTML = 'Score <br/>' + this.score;
+      }
+      if(info.innerHTML.indexOf('Wave') != -1){
+        info.innerHTML = 'Wave <br/>' + this.wave;
+      }
+      if(info.innerHTML.indexOf('Health') != -1){
+        info.innerHTML = 'Health <br/>' + this.health;
       }
     }
   }
@@ -317,6 +332,7 @@ class Game {
 
     for(var i = 0; i < 5; i++){
       var mtd = document.createElement("div"); // createDiv("");
+      var h5 = document.createTextNode("Cost");
       var cnvTurImgPath = "tow" + (i+1) + "s.png";  // small tower image for canvas
       var cnvBulImgPath = "b" + (i+1) + ".png";     // bullet image for canvas
       mtd.cnvTurImg = new Image();
@@ -331,6 +347,7 @@ class Game {
 
       document.getElementById("menuDiv").appendChild(mtd);
 
+
       mtd.cost = 100*i +50;
       mtd.id = 'towImgDiv' + i;
       tiles.push(mtd);
@@ -339,8 +356,10 @@ class Game {
       tImg.addEventListener('error', function() { console.log(imgName + " failed to load"); }, false);
       tImg.src = imgName;
       mtd.appendChild(tImg);
+
     }
     return tiles;
+
   }
 
   getBankValue(){
@@ -362,11 +381,15 @@ class Game {
   createTower(mtd) { // menu turret div
     // create a new tower object and add to array list
     // the menu tower div contains the parameters for the tower
-    var tower = new Tower( mtd.cost, mtd.cnvTurImg, mtd.cnvBulImg);
-    if(tower)
-      this.towers.push(tower); // add tower to the end of the array of towers
-    else {
-      println('failed to make tower');
+    console.log("Bankvalue = " + this.bankValue);
+    console.log("Cost = " + mtd.cost);
+    if(this.bankValue >= mtd.cost){
+      var tower = new Tower( mtd.cost, mtd.cnvTurImg, mtd.cnvBulImg);
+      if(tower)
+        this.towers.push(tower); // add tower to the end of the array of towers
+      else {
+        println('failed to make tower');
+      }
     }
   }
 
@@ -415,10 +438,10 @@ class Game {
     //if user clicks tile and not placing tile change placing to true
     // can add Tower checks cost and other conditions
     if(towerGame.placingTower === true) return;
-    if (towerGame.getBankValue() > 100) {
-      towerGame.createTower(this);
-      towerGame.placingTower = true;
-    }
+    towerGame.createTower(this);
+    towerGame.placingTower = true;
+
+
 
   }
 //  ++++++++++++++++++++++++++++++++++++++++++++++++++    mouse handlers
