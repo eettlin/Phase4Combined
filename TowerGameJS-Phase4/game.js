@@ -66,12 +66,30 @@ class Game {
     this.done = false;
 
     //panelthings
-    this.panel = new Panel(this, 100,-500)
-    this.panelVar1 = false
+    this.panelStart = new Panel(this, 100,-500,"panelStart")
 
-      this.panel.ceatebutton("this is button 1")
-      this.panel.ceatebutton("this is button 2")
-      this.panel.ceatebutton("this is button 3")
+    this.panelStart.ceatebutton("Start",
+      function(){
+        document.getElementById("panelStart").style.display = 'none'
+      })
+    this.panelStart.ceatebutton("Instructions",
+      function(){
+        this.panelInstructions = new Panel(this,100,-500, "panelInstructions")
+        document.getElementById("panelStart").style.display = 'none'
+        this.panelInstructions.ceatebutton("Back",
+          function(){
+            document.getElementById("panelStart").style.display = 'block'
+            document.getElementById("panelInstructions").style.display = 'none'
+          })
+
+      })
+    this.panelStart.ceatebutton("Quit",
+      function(){
+        this.panelQuit = new Panel(this,100,-500,"panelQuit")
+        document.getElementById("panelStart").style.display = 'none'
+      })
+
+
 
     // containerarrays for cells
     this.grid = [];
@@ -123,7 +141,12 @@ class Game {
     this.context.restore();
 
     //more panelthings
-    this.panel.render()
+    if(this.panelStart)
+    this.panelStart.render()
+    if(this.panelInstructions)
+    this.panelInstructions.render()
+    if(this.panelQuit)
+    this.panelQuit.render()
   }
 
   render() { // draw game stuff

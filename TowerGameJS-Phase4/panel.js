@@ -1,6 +1,6 @@
 "use strict"
 class Panel{
-  constructor(game, x,y){
+  constructor(game, x,y, id){
       this.x = x
       this.y = y
       this.pImg = new Image();
@@ -9,7 +9,7 @@ class Panel{
       this.imgName = 'woodPanel.jpg'; // large image for menu tile
       this.pImg.src = this.imgName;
       this.thing = document.createElement("div")
-      this.thing.id = "panel"
+      this.thing.id = id
       this.thing.style.width = 1024+"px"
       this.thing.style.height = 768+"px"
       this.thing.style.position = "absolute"
@@ -33,27 +33,12 @@ class Panel{
     //this.pLoc.vec.y += 1
   }
 
-  ceatebutton(texts){
+  ceatebutton(texts, thing, id){
     this.button = document.createElement("button")
-    this.button.panelVar = false
-    this.button.addEventListener('click',this.clickedButton, false)
-    /*
-    this.button.addEventListener('click',
-    function(){
-      this.panelVar = true;
-      console.log(this.panelVar + document.getElementById(this.id).id)
-      }, false)
-      */
+    this.button.addEventListener('click',thing, false)
     this.button.innerHTML = texts
-    this.button.id = this.intcrament
-    this.intcrament += 1
+    this.button.id = id
     this.thing.appendChild(this.button)
-  }
-
-  clickedButton(){
-    console.log(this.panelVar+document.getElementById(this.id).id)
-    this.panelVar = !this.panelVar;
-    console.log(this.panelVar+document.getElementById(this.id).id)
   }
 
   lerp( a,  b,  f){
