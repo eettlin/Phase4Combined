@@ -74,9 +74,10 @@ class Game {
       })
     this.panelStart.ceatebutton("Instructions",
       function(){
-        this.panelInstructions = new Panel(this,100,-500, "panelInstructions")
+        console.log(towerGame)
+        towerGame.panelInstructions = new Panel(this,100,-500, "panelInstructions")
         document.getElementById("panelStart").style.display = 'none'
-        this.panelInstructions.ceatebutton("Back",
+        towerGame.panelInstructions.ceatebutton("Back",
           function(){
             document.getElementById("panelStart").style.display = 'block'
             document.getElementById("panelInstructions").style.display = 'none'
@@ -85,7 +86,7 @@ class Game {
       })
     this.panelStart.ceatebutton("Quit",
       function(){
-        this.panelQuit = new Panel(this,100,-500,"panelQuit")
+        towerGame.panelQuit = new Panel(this,100,-500,"panelQuit")
         document.getElementById("panelStart").style.display = 'none'
       })
 
@@ -141,12 +142,19 @@ class Game {
     this.context.restore();
 
     //more panelthings
-    if(this.panelStart)
-    this.panelStart.render()
-    if(this.panelInstructions)
-    this.panelInstructions.render()
-    if(this.panelQuit)
-    this.panelQuit.render()
+    console.log(this.panelStart)
+    if(this.panelStart){
+      this.panelStart.render()
+    }
+
+    console.log(this.panelInstructions)
+    if(this.panelInstructions){
+      this.panelInstructions.render()
+    }
+    console.log(this.panelQuit)
+    if(this.panelQuit){
+      this.panelQuit.render()
+    }
   }
 
   render() { // draw game stuff
