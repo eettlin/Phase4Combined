@@ -74,6 +74,7 @@ class Game {
     this.panelStart.ceatebutton("Start",
       function(){
         document.getElementById("panelStart").style.display = 'none'
+        towerGame.panelStart.go = true
       })
     this.panelStart.ceatebutton("Instructions",
       function(){
@@ -83,7 +84,7 @@ class Game {
         towerGame.panelInstructions.ceatebutton("Back",
           function(){
             document.getElementById("panelStart").style.display = 'block'
-            document.getElementById("panelInstructions").style.display = 'none'
+            document.getElementById("panelInstructions").parentNode.removeChild(document.getElementById("panelInstructions"))
           })
 
       })
@@ -158,6 +159,9 @@ class Game {
     if(this.panelQuit){
       this.panelQuit.render()
     }
+    // if(!this.panelStart.go){
+    //   this.gameTime = 0
+    // }
   }
 
   render() { // draw game stuff
@@ -348,7 +352,7 @@ class Game {
 
   updateGameTime(){
     var millis = Date.now();
-    if(millis - this.lastTime >= 1000) {
+    if(millis - this.lastTime >= 1000 && this.panelStart.go) {
       this.gameTime++;
       this.lastTime = millis;
     }

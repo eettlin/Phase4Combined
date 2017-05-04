@@ -21,6 +21,7 @@ class Panel{
       //this.thing.appendChild(this.pImg);
       this.temp = 0
       this.intcrament  = 0
+      this.go = false
   }
 
   render(){
