@@ -145,16 +145,16 @@ class Game {
     this.context.restore();
 
     //more panelthings
-    console.log(this.panelStart)
+    //console.log(this.panelStart)
     if(this.panelStart){
       this.panelStart.render()
     }
 
-    console.log(this.panelInstructions)
+    //console.log(this.panelInstructions)
     if(this.panelInstructions){
       this.panelInstructions.render()
     }
-    console.log(this.panelQuit)
+    //console.log(this.panelQuit)
     if(this.panelQuit){
       this.panelQuit.render()
     }

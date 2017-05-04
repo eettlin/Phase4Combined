@@ -24,11 +24,15 @@ class Panel{
   }
 
   render(){
-    //this.temp = lerp(this.thing.style.top,0,.05)
+    //console.log(this.y)
+    this.temp = this.lerp(this.y,0,.05)
     this.thing.style.top = this.y+"px"
     this.thing.style.left = this.x+"px"
-    if(this.y <= 100)
-    this.y += 5
+    if(this.y <= 100){
+      if(this.temp <-1){
+        this.y = this.temp
+      }
+    }
     //this.ctx.drawImage(this.pImg, this.pLoc.x, this.pLoc.y)
     //this.pLoc.vec.y += 1
   }
@@ -42,6 +46,7 @@ class Panel{
   }
 
   lerp( a,  b,  f){
+  //console.log(a + f * (b - a))
     return a + f * (b - a)
   }
 
