@@ -6,18 +6,19 @@ class Panel{
       this.pImg = new Image();
       this.pImg.addEventListener('error', function() { console.log(this.imgName + " failed to load"); }, false);
       this.game=game
-      this.imgName = 'woodPanel.jpg'; // large image for menu tile
+      this.imgName = "pan.png"; // large image for menu tile
       this.pImg.src = this.imgName;
       this.thing = document.createElement("div")
       this.thing.id = id
-      this.thing.style.width = 1024+"px"
-      this.thing.style.height = 768+"px"
+      this.thing.style.width = 450+"px"
+      this.thing.style.height = 290*3+"px"
       this.thing.style.position = "absolute"
-      this.thing.style.backgroundImage = 'url("woodPanel.jpg")'
+      this.thing.style.backgroundImage = 'url("pan.png")'
       this.thing.style.top = this.y+"px"
-      this.thing.style.left = this.x+"px"
-      this.wrapper = document.getElementById('wrapperDiv')
-      this.wrapper.appendChild(this.thing)
+      //this.thing.style.left = this.x+"px"
+      this.thing.style.textAlign = "center"
+      this.thing.style.align = "center"
+      document.getElementById('wrapperDiv').appendChild(this.thing)
       //this.thing.appendChild(this.pImg);
       this.temp = 0
       this.intcrament  = 0
@@ -25,10 +26,9 @@ class Panel{
   }
 
   render(){
-    //console.log(this.y)
     this.temp = this.lerp(this.y,0,.05)
     this.thing.style.top = this.y+"px"
-    this.thing.style.left = this.x+"px"
+    //this.thing.style.left = this.x+"px"
     if(this.y <= 100){
       if(this.temp <-1){
         this.y = this.temp
@@ -41,14 +41,29 @@ class Panel{
   ceatebutton(texts, thing, id){
     this.button = document.createElement("button")
     this.button.addEventListener('click',thing, false)
-    this.button.innerHTML = texts
     this.button.id = id
+    if(this.button.id === "panelStartStartButton"){
+      this.button.imageThing = document.createElement("img")
+      this.button.imageThing.src  = "play.png"
+      this.thing.innerHTML += '<br><br><br><br><br><br>'
+      this.button.appendChild(this.button.imageThing)
+    }
+    if(this.button.id === "panelStartInstructionButton"){
+      this.button.imageThing = document.createElement("img")
+      //this.button.imageThing.src  = "exit.png"
+      this.button.appendChild(this.button.imageThing)
+      this.thing.innerHTML += '<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>'
+    }
+    if(this.button.id === "panelStartQuitButton"){
+      this.button.imageThing = document.createElement("img")
+      this.button.imageThing.src  = "exit.png"
+      this.button.appendChild(this.button.imageThing)
+      this.thing.innerHTML += '<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>'
+    }
     this.thing.appendChild(this.button)
   }
 
   lerp( a,  b,  f){
-  //console.log(a + f * (b - a))
     return a + f * (b - a)
   }
-
 }
