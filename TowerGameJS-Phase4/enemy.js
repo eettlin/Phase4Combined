@@ -96,3 +96,13 @@ class Enemy {
   }
 
 } // end class ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+class Enemy1 extends Enemy {
+  constructor(game, startCell, randomPath) {
+    super(game, startCell, randomPath)
+  }
+}
+class Enemy2 extends Enemy {
+  constructor(game, startCell, randomPath) {
+    super(game, startCell, randomPath)
+  }
+}
