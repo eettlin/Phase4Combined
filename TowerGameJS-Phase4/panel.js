@@ -17,7 +17,7 @@ class Panel{
       this.thing.style.top = this.y+"px"
       //this.thing.style.left = this.x+"px"
       this.thing.style.textAlign = "center"
-      this.thing.style.align = "center"
+      this.thing.align = "center"
       document.getElementById('wrapperDiv').appendChild(this.thing)
       //this.thing.appendChild(this.pImg);
       this.temp = 0
