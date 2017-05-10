@@ -11,6 +11,9 @@ var cellId = 0;
 function setup() {
   towerGame = new Game();
   window.setTimeout(draw, 100);    // wait 100ms for resources to load then start draw loop
+
+  //panelthings
+
 }
 
 function draw() {   // the animation loop
@@ -30,7 +33,11 @@ class Game {
     this.towers = [];
     this.enemies = [];
     this.bullets = [];
+
     this.bankValue = 500;
+    this.score = 0;
+    this.wave = 0;
+    this.health = 100;
     this.canvas = document.createElement("canvas");
     if(!this.canvas || !this.canvas.getContext)
         throw "No valid canvas found!";
@@ -53,11 +60,42 @@ class Game {
         if(evt.key == "E" || evt.key == "e")
             towerGame.sendEnemies();
         }, false);
+    this.currentWaveNum=0
+    this.wave=new Wave(this,AllWaves[this.currentWaveNum])
 
     this.mouseX = 0;
     this.mouseY = 0;
     this.w = 20;
     this.done = false;
+
+    //panelthings
+    this.panelStart = new Panel(this, 100,-500,"panelStart")
+
+    this.panelStart.ceatebutton("Start",
+      function(){
+        document.getElementById("panelStart").style.display = 'none'
+        towerGame.panelStart.go = true
+      })
+    this.panelStart.ceatebutton("Instructions",
+      function(){
+        console.log(towerGame)
+        towerGame.panelInstructions = new Panel(this,100,-500, "panelInstructions")
+        document.getElementById("panelStart").style.display = 'none'
+        towerGame.panelInstructions.ceatebutton("Back",
+          function(){
+            document.getElementById("panelStart").style.display = 'block'
+            document.getElementById("panelInstructions").parentNode.removeChild(document.getElementById("panelInstructions"))
+          })
+
+      })
+    this.panelStart.ceatebutton("Quit",
+      function(){
+        towerGame.panelQuit = new Panel(this,100,-500,"panelQuit")
+        document.getElementById("panelStart").style.display = 'none'
+      })
+
+
+
     // containerarrays for cells
     this.grid = [];
     this.cols = Math.floor(this.canvas.width / this.w);
@@ -78,6 +116,7 @@ class Game {
     this.updateInfoElements(gt);
     this.removeBullets();
     this.removeEnemies();
+    this.controlWaves()
     if (this.isRunning) {
       this.render();
     }
@@ -105,6 +144,24 @@ class Game {
     this.context.font = "14px sans-serif";
     this.context.fillText("Press the E key to send enemies", 20, this.canvas.height-20);
     this.context.restore();
+
+    //more panelthings
+    //console.log(this.panelStart)
+    if(this.panelStart){
+      this.panelStart.render()
+    }
+
+    //console.log(this.panelInstructions)
+    if(this.panelInstructions){
+      this.panelInstructions.render()
+    }
+    //console.log(this.panelQuit)
+    if(this.panelQuit){
+      this.panelQuit.render()
+    }
+    // if(!this.panelStart.go){
+    //   this.gameTime = 0
+    // }
   }
 
   render() { // draw game stuff
@@ -119,7 +176,7 @@ class Game {
     // An adjacent neighbor has a step of 10
     // and a diagonal neighbor has a step of 14.
 
-  brushfire() {
+  brushfire(undo) { //if brushfire fails to make a valid map undo will be called
     // Initialize each cell in the grid to have a distance that
     // is the greatest possible.  Initialize each cell to
     // have no parent and populate it's array of neighbors
@@ -159,13 +216,22 @@ class Game {
                 }
           }     // for each neighbor
         }   // while(queue.length)
+    if(!this.validMap()){
+      if(undo){
+          undo()
+          this.brushfire()
+      }else{
+        // delete any enemy that is currently in a cell without a parent
+        for(let i = 0; i < this.enemies.length;  i++) {
+            let enemy = towerGame.enemies[i];
+            if(!enemy.currentCell.parent)
+                enemy.kill = true;    // kill the orphans
+            }
+            console.log("brushfire created an invalid map and no undo was inputed")
 
-    // delete any enemy that is currently in a cell without a parent
-    for(let i = 0; i < this.enemies.length;  i++) {
-        let enemy = towerGame.enemies[i];
-        if(!enemy.currentCell.parent)
-            enemy.kill = true;    // kill the orphans
-        }
+      }
+    }
+
 
         // give each cell a vector that points to its parent
 //       for(var i = 0; i < this.cols; i++){
@@ -175,7 +241,34 @@ class Game {
 //       }
 
     }
+    //check the map to see if there are cells without parents
+    validMap() {
+      for(var i = 0; i < this.cols; i++){
+        for(var j = 0; j < this.rows; j++){
+          var cell = this.grid[i][j];
+          if(!cell.parent && !(cell.occupied || cell.hasTower)&& cell!=this.root){
+            return false;
 
+          }
+        }
+      }
+      return true;
+    }
+    //undo an invalid map action
+    undo(cell,tower) {
+      if(tower){
+        return function() {
+          cell.hasTower=false;
+          towerGame.towers.splice(towerGame.towers.indexOf(tower))
+          alert("you cannot place a tower here")
+        }
+      }else{
+        return function() {
+          cell.occupied= !cell.occupied
+          alert("performing that action would create an invalid grid")
+        }
+      }
+    }
     // sendEnemies()
     // Send a random number of enemies, up to 5, each from a random location
     // in the top half of the grid.  About half of the enemies will take the
@@ -202,13 +295,20 @@ class Game {
                 }
             }
     }
-
+    controlWaves() {
+      if(this.wave.isWaveOver()){
+        this.currentWaveNum+=1
+        this.wave=new Wave(this,AllWaves[this.currentWaveNum])
+      }else{
+        this.wave.run()
+      }
+    }
     // Delete any enemies that have died
     removeEnemies() {
       for(let i = this.enemies.length-1; i >= 0; i--) {
         if(this.enemies[i].kill)
             this.enemies.splice(i,1);   // delete this dead enemy
-        else this.enemies[i].run();
+
         }
     }
 
@@ -232,15 +332,27 @@ class Game {
       // change the html content after condition--use indexOf
       if(info.innerHTML.indexOf('Bank') != -1){
         info.innerHTML = 'Bank <br/>' + this.bankValue;
+        if(this.bankValue < 0){
+          this.bankValue == 0;
+        }
       }else if(info.innerHTML.indexOf('Time') != -1){
         info.innerHTML = 'Time <br/>' + time;
+      }
+      if(info.innerHTML.indexOf('Score') != -1){
+        info.innerHTML = 'Score <br/>' + this.score;
+      }
+      if(info.innerHTML.indexOf('Wave') != -1){
+        info.innerHTML = 'Wave <br/>' + this.wave.waveJson.name;
+      }
+      if(info.innerHTML.indexOf('Health') != -1){
+        info.innerHTML = 'Health <br/>' + this.health;
       }
     }
   }
 
   updateGameTime(){
     var millis = Date.now();
-    if(millis - this.lastTime >= 1000) {
+    if(millis - this.lastTime >= 1000 && this.panelStart.go) {
       this.gameTime++;
       this.lastTime = millis;
     }
@@ -253,9 +365,7 @@ class Game {
       this.grid[i] = [];
       for(var j = 0; j < this.rows; j++){
         this.grid[i][j] = new Cell(this, vector2d((i*this.w), (j*this.w)), ++cellId);
-        // make 10% of the cells occupied
-        if(this.grid[i][j] != this.root && Math.floor(Math.random()*100) < 10)
-            this.grid[i][j].occupied = true;
+
       }
     }
 
@@ -272,6 +382,7 @@ class Game {
 
     for(var i = 0; i < 5; i++){
       var mtd = document.createElement("div"); // createDiv("");
+      var h5 = document.createTextNode("Cost");
       var cnvTurImgPath = "tow" + (i+1) + "s.png";  // small tower image for canvas
       var cnvBulImgPath = "b" + (i+1) + ".png";     // bullet image for canvas
       mtd.cnvTurImg = new Image();
@@ -286,6 +397,7 @@ class Game {
 
       document.getElementById("menuDiv").appendChild(mtd);
 
+
       mtd.cost = 100*i +50;
       mtd.id = 'towImgDiv' + i;
       tiles.push(mtd);
@@ -294,8 +406,10 @@ class Game {
       tImg.addEventListener('error', function() { console.log(imgName + " failed to load"); }, false);
       tImg.src = imgName;
       mtd.appendChild(tImg);
+
     }
     return tiles;
+
   }
 
   getBankValue(){
@@ -307,20 +421,25 @@ class Game {
     // Some money required but also cannot place tower on a cell
     // of the grid that is occupied or is the root cell
     if(towerGame.placingTower) {
-        if(!cell.occupied && !cell.hasTower && cell != towerGame.root)
-            return true;
-      }
-    return(false);
+        if(!cell.occupied && !cell.hasTower && cell != towerGame.root){
+          return true;
+        }
+      return(false);
+    }
   }
 
   createTower(mtd) { // menu turret div
     // create a new tower object and add to array list
     // the menu tower div contains the parameters for the tower
-    var tower = new Tower( mtd.cost, mtd.cnvTurImg, mtd.cnvBulImg);
-    if(tower)
-      this.towers.push(tower); // add tower to the end of the array of towers
-    else {
-      println('failed to make tower');
+    console.log("Bankvalue = " + this.bankValue);
+    console.log("Cost = " + mtd.cost);
+    if(this.bankValue >= mtd.cost){
+      var tower = new Tower( mtd.cost, mtd.cnvTurImg, mtd.cnvBulImg);
+      if(tower)
+        this.towers.push(tower); // add tower to the end of the array of towers
+      else {
+        println('failed to make tower');
+      }
     }
   }
 
@@ -336,7 +455,7 @@ class Game {
     // placing a tower makes the cell containing the tower
     // unavailable to enemies the same as if it were
     // occupied (blocked)
-    towerGame.brushfire();   // all new distances and parents
+    towerGame.brushfire(towerGame.undo(cell,towerGame.towers[towerGame.towers.length-1]));   // all new distances and parents
   }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ load callbacks
@@ -369,10 +488,10 @@ class Game {
     //if user clicks tile and not placing tile change placing to true
     // can add Tower checks cost and other conditions
     if(towerGame.placingTower === true) return;
-    if (towerGame.getBankValue() > 100) {
-      towerGame.createTower(this);
-      towerGame.placingTower = true;
-    }
+    towerGame.createTower(this);
+    towerGame.placingTower = true;
+
+
 
   }
 //  ++++++++++++++++++++++++++++++++++++++++++++++++++    mouse handlers
@@ -405,7 +524,7 @@ class Game {
     else if(!towerGame.placingTower && !cell.hasTower) {
         // toggle the occupied property of the clicked cell
         cell.occupied = !cell.occupied;
-        towerGame.brushfire();   // all new distances and parents
+        towerGame.brushfire(towerGame.undo(cell));   // all new distances and parents
         }
   }
   //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Other

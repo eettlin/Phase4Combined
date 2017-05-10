@@ -50,12 +50,12 @@ class Enemy {
     var ctx = this.game.context;
 
 
-    // if(this.randomPath)
-    //     ctx.fillStyle = 'blue';
-    // else ctx.fillStyle = 'green';
-    // ctx.beginPath();
-    // ctx.ellipse(this.loc.x, this.loc.y, this.radius, this.radius, 0, 2*Math.PI, false);
-    // ctx.fill();
+    if(this.randomPath)
+        ctx.fillStyle = 'blue';
+    else ctx.fillStyle = 'green';
+    ctx.beginPath();
+    ctx.ellipse(this.loc.x, this.loc.y, this.radius, this.radius, 0, 2*Math.PI, false);
+    ctx.fill();
   }
 
     // update()
@@ -69,6 +69,7 @@ class Enemy {
         this.currentCell = this.targetCell;
         if(this.currentCell == this.game.root) {   // we have reached the end of the path
             this.kill = true;
+            towerGame.health = towerGame.health - 1;
             return;
             }
         this.targetCell = this.nextTarget();                  // set a new target
@@ -95,3 +96,13 @@ class Enemy {
   }
 
 } // end class ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+class Enemy1 extends Enemy {
+  constructor(game, startCell, randomPath) {
+    super(game, startCell, randomPath)
+  }
+}
+class Enemy2 extends Enemy {
+  constructor(game, startCell, randomPath) {
+    super(game, startCell, randomPath)
+  }
+}
