@@ -38,29 +38,31 @@ class Panel{
     //this.pLoc.vec.y += 1
   }
 
-  ceatebutton(texts, thing, id){
-    this.button = document.createElement("button")
-    this.button.addEventListener('click',thing, false)
-    this.button.id = id
-    if(this.button.id === "panelStartStartButton"){
-      this.button.imageThing = document.createElement("img")
-      this.button.imageThing.src  = "play.png"
+  ceatebutton(texts, funk, id){
+    var button = document.createElement("button")
+    
+    button.addEventListener('click',funk, false)
+    console.log(button)
+    button.id = id
+    if(button.id === "panelStartStartButton"){
+      button.imageThing = document.createElement("img")
+      button.imageThing.src  = "play.png"
       this.thing.innerHTML += '<br><br><br><br><br><br>'
-      this.button.appendChild(this.button.imageThing)
+      button.appendChild(button.imageThing)
     }
-    if(this.button.id === "panelStartInstructionButton"){
-      this.button.imageThing = document.createElement("img")
-      //this.button.imageThing.src  = "exit.png"
-      this.button.appendChild(this.button.imageThing)
+    if(button.id === "panelStartInstructionButton"){
+      button.imageThing = document.createElement("img")
+      //button.imageThing.src  = "exit.png"
+      button.appendChild(button.imageThing)
       this.thing.innerHTML += '<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>'
     }
-    if(this.button.id === "panelStartQuitButton"){
-      this.button.imageThing = document.createElement("img")
-      this.button.imageThing.src  = "exit.png"
-      this.button.appendChild(this.button.imageThing)
+    if(button.id === "panelStartQuitButton"){
+      button.imageThing = document.createElement("img")
+      button.imageThing.src  = "exit.png"
+      button.appendChild(button.imageThing)
       this.thing.innerHTML += '<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>'
     }
-    this.thing.appendChild(this.button)
+    this.thing.appendChild(button)
   }
 
   lerp( a,  b,  f){

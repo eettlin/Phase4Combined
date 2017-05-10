@@ -86,7 +86,6 @@ class Game {
             document.getElementById("panelStart").style.display = 'block'
             document.getElementById("panelInstructions").parentNode.removeChild(document.getElementById("panelInstructions"))
           }, "panelInstructionsButton")
-
       }, "panelStartInstructionButton")
 
     this.panelStart.ceatebutton("Quit",
@@ -94,6 +93,8 @@ class Game {
         towerGame.panelQuit = new Panel(this,100,-500,"panelQuit")
         document.getElementById("panelStart").style.display = 'none'
       }, "panelStartQuitButton")
+
+
 
 
 
