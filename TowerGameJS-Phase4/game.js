@@ -70,29 +70,31 @@ class Game {
 
     //panelthings
     this.panelStart = new Panel(this, 100,-500,"panelStart")
+    this.panelStart.createButtons()
+    // this.panelStart.ceatebutton("Start",
+    //   function(){
+    //     document.getElementById("panelStart").style.display = 'none'
+    //     towerGame.panelStart.go = true
+    //   }, "panelStartStartButton")
+    //
+    // this.panelStart.ceatebutton("Instructions",
+    //   function(){
+    //     document.getElementById("panelStart").style.display = 'none'
+    //     towerGame.panelInstructions = new Panel(this,100,-500, "panelInstructions")
+    //     towerGame.panelInstructions.ceatebutton("Back",
+    //       function(){
+    //         document.getElementById("panelStart").style.display = 'block'
+    //         document.getElementById("panelInstructions").parentNode.removeChild(document.getElementById("panelInstructions"))
+    //       }, "panelInstructionsButton")
+    //   }, "panelStartInstructionButton")
+    //
+    // this.panelStart.ceatebutton("Quit",
+    //   function(){
+    //     towerGame.panelQuit = new Panel(this,100,-500,"panelQuit")
+    //     document.getElementById("panelStart").style.display = 'none'
+    //   }, "panelStartQuitButton")
 
-    this.panelStart.ceatebutton("Start",
-      function(){
-        document.getElementById("panelStart").style.display = 'none'
-        towerGame.panelStart.go = true
-      })
-    this.panelStart.ceatebutton("Instructions",
-      function(){
-        console.log(towerGame)
-        towerGame.panelInstructions = new Panel(this,100,-500, "panelInstructions")
-        document.getElementById("panelStart").style.display = 'none'
-        towerGame.panelInstructions.ceatebutton("Back",
-          function(){
-            document.getElementById("panelStart").style.display = 'block'
-            document.getElementById("panelInstructions").parentNode.removeChild(document.getElementById("panelInstructions"))
-          })
 
-      })
-    this.panelStart.ceatebutton("Quit",
-      function(){
-        towerGame.panelQuit = new Panel(this,100,-500,"panelQuit")
-        document.getElementById("panelStart").style.display = 'none'
-      })
 
 
 
@@ -146,22 +148,17 @@ class Game {
     this.context.restore();
 
     //more panelthings
-    //console.log(this.panelStart)
     if(this.panelStart){
       this.panelStart.render()
     }
 
-    //console.log(this.panelInstructions)
     if(this.panelInstructions){
       this.panelInstructions.render()
     }
-    //console.log(this.panelQuit)
+
     if(this.panelQuit){
       this.panelQuit.render()
     }
-    // if(!this.panelStart.go){
-    //   this.gameTime = 0
-    // }
 
     //collision detection
     for(var i = this.enemies.length - 1; i >= 0; i--){
