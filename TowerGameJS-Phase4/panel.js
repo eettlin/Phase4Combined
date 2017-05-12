@@ -112,11 +112,3 @@ var buttonJSON= [
     pic:"exit.png",
     picId: "exit"
 }]
-
-// for(buttons):
-//   button add event listner(button[i].eventlistiner)
-//   if button.image:
-//     button.image=button.image
-//   button.id=buitton.id
-//   button.position=1/(2*buttons.length)+i/(buttons.length)
-// */
