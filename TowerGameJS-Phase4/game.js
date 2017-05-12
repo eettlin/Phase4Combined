@@ -70,29 +70,29 @@ class Game {
 
     //panelthings
     this.panelStart = new Panel(this, 100,-500,"panelStart")
-
-    this.panelStart.ceatebutton("Start",
-      function(){
-        document.getElementById("panelStart").style.display = 'none'
-        towerGame.panelStart.go = true
-      }, "panelStartStartButton")
-
-    this.panelStart.ceatebutton("Instructions",
-      function(){
-        document.getElementById("panelStart").style.display = 'none'
-        towerGame.panelInstructions = new Panel(this,100,-500, "panelInstructions")
-        towerGame.panelInstructions.ceatebutton("Back",
-          function(){
-            document.getElementById("panelStart").style.display = 'block'
-            document.getElementById("panelInstructions").parentNode.removeChild(document.getElementById("panelInstructions"))
-          }, "panelInstructionsButton")
-      }, "panelStartInstructionButton")
-
-    this.panelStart.ceatebutton("Quit",
-      function(){
-        towerGame.panelQuit = new Panel(this,100,-500,"panelQuit")
-        document.getElementById("panelStart").style.display = 'none'
-      }, "panelStartQuitButton")
+    this.panelStart.createButtons()
+    // this.panelStart.ceatebutton("Start",
+    //   function(){
+    //     document.getElementById("panelStart").style.display = 'none'
+    //     towerGame.panelStart.go = true
+    //   }, "panelStartStartButton")
+    //
+    // this.panelStart.ceatebutton("Instructions",
+    //   function(){
+    //     document.getElementById("panelStart").style.display = 'none'
+    //     towerGame.panelInstructions = new Panel(this,100,-500, "panelInstructions")
+    //     towerGame.panelInstructions.ceatebutton("Back",
+    //       function(){
+    //         document.getElementById("panelStart").style.display = 'block'
+    //         document.getElementById("panelInstructions").parentNode.removeChild(document.getElementById("panelInstructions"))
+    //       }, "panelInstructionsButton")
+    //   }, "panelStartInstructionButton")
+    //
+    // this.panelStart.ceatebutton("Quit",
+    //   function(){
+    //     towerGame.panelQuit = new Panel(this,100,-500,"panelQuit")
+    //     document.getElementById("panelStart").style.display = 'none'
+    //   }, "panelStartQuitButton")
 
 
 
