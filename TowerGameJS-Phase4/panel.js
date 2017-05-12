@@ -11,7 +11,7 @@ class Panel{
       this.thing = document.createElement("div")
       this.thing.id = id
       this.thing.style.width = 450+"px"
-      this.thing.style.height = 290*3+"px"
+      this.thing.style.height = 290+"px"
       this.thing.style.position = "absolute"
       this.thing.style.backgroundImage = 'url("pan.png")'
       this.thing.style.top = this.y+"px"
@@ -26,44 +26,14 @@ class Panel{
   }
 
   render(){
-    this.temp = this.lerp(this.y,0,.05)
+    this.temp = this.lerp(this.y,300,.05)
     this.thing.style.top = this.y+"px"
     //this.thing.style.left = this.x+"px"
-    if(this.y <= 100){
-      if(this.temp <-1){
+      if(Math.abs(this.temp) >1){
         this.y = this.temp
-      }
     }
     //this.ctx.drawImage(this.pImg, this.pLoc.x, this.pLoc.y)
     //this.pLoc.vec.y += 1
-  }
-
-  ceatebutton(texts, funk, id){
-    var button = document.createElement("div")
-
-    button.addEventListener('click',funk, false)
-    console.log(button)
-    button.id = id
-    if(button.id === "panelStartStartButton"){
-      button.imageThing = document.createElement("img")
-      button.imageThing.addEventListener('click',funk, false)
-      button.imageThing.src  = "play.png"
-      this.thing.innerHTML += '<br><br><br><br><br><br>'
-      button.appendChild(button.imageThing)
-    }
-    if(button.id === "panelStartInstructionButton"){
-      button.imageThing = document.createElement("img")
-      //button.imageThing.src  = "exit.png"
-      button.appendChild(button.imageThing)
-      this.thing.innerHTML += '<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>'
-    }
-    if(button.id === "panelStartQuitButton"){
-      button.imageThing = document.createElement("img")
-      button.imageThing.src  = "exit.png"
-      button.appendChild(button.imageThing)
-      this.thing.innerHTML += '<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>'
-    }
-    this.thing.appendChild(button)
   }
 
   lerp( a,  b,  f){
@@ -72,18 +42,35 @@ class Panel{
   createButtons(){
     for(var i=0;i<buttonJSON.length;i++){
       var button = document.createElement("div")
+      button.imageThing = document.createElement("img")
+      button.imageThing.id = buttonJSON[i].picId
+      button.imageThing.src  = buttonJSON[i].pic
+      button.imageThing.addEventListener("click",buttonJSON[i].thing,false)
       button.id= buttonJSON[i].id
-      button.addEventListener("click",buttonJSON[i].thing,false)
-      button.style.width=200+"px"
-      button.style.height=100+"px"
+      button.style.width=123+"px"
+      button.style.height=30+"px"
       button.style.position="relative"
       button.style.top=12+21*i+"%"
-      button.style.left=125+"px"
-      button.imageThing = document.createElement("img")
-      button.imageThing.src  = buttonJSON[i].pic
+      button.style.left=150+"px"
       button.appendChild(button.imageThing)
       this.thing.appendChild(button)
     }
+  }
+
+  createButtons2(x,y,z){
+    var button = document.createElement("div")
+    button.imageThing = document.createElement("img")
+    button.imageThing.id = "backpic"
+    button.imageThing.src = "back.png"
+    button.imageThing.addEventListener("click",y,false)
+    button.id= x
+    button.style.width=123+"px"
+    button.style.height=30+"px"
+    button.style.position="relative"
+    button.style.top=12+21+"%"
+    button.style.left=125+"px"
+    button.appendChild(button.imageThing)
+    this.thing.appendChild(button)
   }
 }
 
@@ -96,14 +83,15 @@ var buttonJSON= [
       },
       id:"panelStartStartButton",
 
-      pic:"play.png"
+      pic:"play.png",
+      picId: "play"
 },
 {
   name:"Instructions",
   thing:function(){
       document.getElementById("panelStart").style.display = "none"
       towerGame.panelInstructions = new Panel(this,100,-500, "panelInstructions")
-      towerGame.panelInstructions.ceatebutton("Back",
+      towerGame.panelInstructions.createButtons2("Back",
         function(){
           document.getElementById("panelStart").style.display = "block"
           document.getElementById("panelInstructions").parentNode.removeChild(document.getElementById("panelInstructions"))
@@ -111,7 +99,8 @@ var buttonJSON= [
     },
     id:"panelStartInstructionButton",
 
-    pic:""
+    pic:"wframe.png",
+    picId: "instructions"
 },
 {
   name:"Quit",
@@ -120,7 +109,8 @@ var buttonJSON= [
       document.getElementById("panelStart").style.display = "none"
     },
     id: "panelStartQuitButton",
-    pic:"exit.png"
+    pic:"exit.png",
+    picId: "exit"
 }]
 
 // for(buttons):
