@@ -161,11 +161,15 @@ class Game {
     }
 
     //collision detection
-    for(var i = 0; i < this.enemies.length; i++){
-      for(var j = 0; j < this.bullets.length; j++){
+    for(var i = this.enemies.length - 1; i >= 0; i--){
+      for(var j = this.bullets.length - 1; j >= 0; j--){
         if(this.circlePointCollision(this.bullets[j].loc.x, this.bullets[j].loc.y, this.enemies[i].loc.x, this.enemies[i].loc.y, this.enemies[i].radius)){
           this.bullets.splice(j, 1);
-          this.enemies.splice(i, 1);
+          this.enemies[i].kill = true;
+          this.score = this.score + 1;
+          if(this.score % 20 === 0){
+            this.bankValue = this.bankValue + 10;
+          }
         }
       }
     }
