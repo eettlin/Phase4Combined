@@ -14,7 +14,7 @@ class Enemy {
     this.kill = false;
 
     this.img = new Image();
-    this.img.src = "images/spritesheets/enemy.png";
+    this.img.src = "resources/images/spritesheets/enemy.png";
     this.img.addEventListener('error', function() { console.log(this.img.src + " failed to load"); }, false);
   }
 
