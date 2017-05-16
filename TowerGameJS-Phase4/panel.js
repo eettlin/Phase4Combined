@@ -79,7 +79,7 @@ var buttonJSON= [
     name:"Start",
       thing:function(){
         document.getElementById("panelStart").style.display = "none"
-        towerGame.panelStart.go = true
+        towerGame.level = new Level2(towerGame)
       },
       id:"panelStartStartButton",
 
