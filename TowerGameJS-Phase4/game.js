@@ -43,7 +43,10 @@ class Game {
         throw "No valid canvas found!";
     this.canvas.width = 900;
     this.canvas.height = 750;
-    document.getElementById('canDiv').appendChild(this.canvas);
+    this.canvas.canDiv=document.getElementById('canDiv')
+    this.canvas.canDiv.appendChild(this.canvas);
+    
+
     this.context = this.canvas.getContext("2d");
     if(!this.context)
         throw "No valid context found!";
