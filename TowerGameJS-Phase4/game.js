@@ -114,6 +114,7 @@ class Game {
   hideImgElement() { this.style.display = "none"; }
 
   run() { // called from draw()
+
     this.level.run()
     // let gt = this.updateGameTime();
     // this.updateInfoElements(gt);
@@ -170,6 +171,7 @@ class Game {
     //     }
     //   }
     // }
+
   }
 
   render() { // draw game stuff
