@@ -33,7 +33,7 @@ class Panel{
 
   createButton(JSON1, i){
     var button = document.createElement("div")
-    button.id= JSON1.id
+    button.id= JSON1.buttonJSON[i].picId
     button.style.width=123+"px"
     button.style.height=30+"px"
     button.style.position="relative"
@@ -60,15 +60,17 @@ var panelJSON= [{
       pic: "play.png",
       picId: "play",
       funk: function(){
-
+        this.game.level= new Level2(this.game)
+        document.getElementById("start").parentNode.removeChild(document.getElementById("start"))
       }
     },{
       name: "Instruction Button",
       id: "instruction",
       pic: "",
-      picId: "wframe",
+      picId: "instruction",
       funk: function(){
-
+        this.game.panelInstructions = new Panel(this, 1)
+        document.getElementById("start").parentNode.removeChild(document.getElementById("start"))
       }
     },{
       name: "Quit Button",
@@ -76,7 +78,8 @@ var panelJSON= [{
       pic: "exit.png",
       picId: "exit",
       funk: function(){
-
+        this.game.panelQuit = new Panel(this, 2)
+        document.getElementById("start").parentNode.removeChild(document.getElementById("start"))
       }
     }]
 },{
@@ -91,7 +94,8 @@ var panelJSON= [{
       pic: "back.png",
       picId: "back",
       funk: function(){
-
+        this.game.panelStart = new Panel(this, 0)
+        document.getElementById("instructionPanel").parentNode.removeChild(document.getElementById("instructionPanel"))
       }
     }]
 },{
@@ -106,7 +110,9 @@ var panelJSON= [{
       pic: "",
       picId: "replay",
       funk: function(){
-
+        this.game.panelStart = new Panel(this, 0)
+        this.game.level= new Level1(this.game)
+        document.getElementById("endPanel").parentNode.removeChild(document.getElementById("endPanel"))
       }
     },{
       name: "Quit Button",
@@ -114,7 +120,8 @@ var panelJSON= [{
       pic: "exit.png",
       picId: "exit",
       funk: function(){
-
+        this.game.panelQuit = new Panel(this, 2)
+        document.getElementById("endPanel").parentNode.removeChild(document.getElementById("endPanel"))
       }
     },{
       name: "Credits Button",
@@ -122,7 +129,24 @@ var panelJSON= [{
       pic: "",
       picId: "credits",
       funk: function(){
-
+        this.game.panelCredits = new Panel(this, 3)
+        document.getElementById("endPanel").parentNode.removeChild(document.getElementById("endPanel"))
+      }
+    }]
+},{
+  name: "Credites Panel",
+  id: "creditesPanel",
+  pic: "pan.png",
+  picId: "pan",
+  buttonJSON: [
+    {
+      name: "Back Button",
+      id: "back",
+      pic: "back.png",
+      picId: "back",
+      funk: function(){
+        this.game.panelQuit = new Panel(this, 2)
+        document.getElementById("creditesPanel").parentNode.removeChild(document.getElementById("creditesPanel"))
       }
     }]
 }]
