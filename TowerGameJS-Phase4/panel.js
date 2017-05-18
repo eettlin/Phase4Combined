@@ -110,7 +110,6 @@ var panelJSON= [{
       pic: "wframe.png",
       picId: "wframe",
       funk: function(){
-        towerGame.level.panelStart = new Panel(towerGame, 0)
         towerGame.level= new Level1(towerGame)
         document.getElementById("endPanel").parentNode.removeChild(document.getElementById("endPanel"))
       }
