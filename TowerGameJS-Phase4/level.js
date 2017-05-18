@@ -17,18 +17,17 @@ class Level1 extends Level {
   constructor(game){
     super(game,1)
     this.game.canvas.canDiv.style.backgroundImage="url('resources/images/bg.png')"
+    this.panelStart = new Panel(this, 0)
+    this.panelInstructions = 0
+    this.panelQuit = 0
   }
   run() {
-    if(this.game.panelStart){
-      this.game.panelStart.render()
+    if(this.panelStart){
+      this.panelStart.render()
     }
 
-    if(this.game.panelInstructions){
-      this.game.panelInstructions.render()
-    }
-
-    if(this.game.panelQuit){
-      this.game.panelQuit.render()
+    if(this.panelInstructions){
+      this.panelInstructions.render()
     }
   }
 }
@@ -99,20 +98,30 @@ class Level2 extends Level{
           }
         }
       }
-      if( this.game.health <= 0){
-        this.game.level=new Level3(this.game)
-      }
+    }
+    if( this.game.health <= 0){
+      this.game.level=new Level3(this.game)
     }
   }
 
+}
+class Level3 extends Level{
+  constructor(game) {
+    super(game)
+    this.game.enemies=[]
+    this.game.canvas.canDiv.style.backgroundImage="url('resources/images/bg3.png')"
+    this.panelQuit = new Panel(this, 2)
+    this.panelCredits = 0
+    this.panelStart = 0
   }
-  class Level3 extends Level{
-    constructor(game) {
-      super(game)
-      this.game.enemies=[]
-      this.game.canvas.canDiv.style.backgroundImage="url('resources/images/bg3.png')"
+  run() {
+    this.game.render()
+
+    if(this.panelQuit){
+      this.panelQuit.render()
     }
-    run() {
-      this.game.render()
+    if(this.panelCredits){
+      this.panelCredits.render()
     }
   }
+}
