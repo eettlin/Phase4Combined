@@ -43,7 +43,10 @@ class Game {
         throw "No valid canvas found!";
     this.canvas.width = 900;
     this.canvas.height = 750;
-    document.getElementById('canDiv').appendChild(this.canvas);
+    this.canvas.canDiv=document.getElementById('canDiv')
+    this.canvas.canDiv.appendChild(this.canvas);
+    
+
     this.context = this.canvas.getContext("2d");
     if(!this.context)
         throw "No valid context found!";
@@ -67,32 +70,34 @@ class Game {
     this.mouseY = 0;
     this.w = 20;
     this.done = false;
-
+    this.level= new Level1(this)
     //panelthings
     this.panelStart = new Panel(this, 100,-500,"panelStart")
+    this.panelStart.createButtons()
+    // this.panelStart.ceatebutton("Start",
+    //   function(){
+    //     document.getElementById("panelStart").style.display = 'none'
+    //     towerGame.panelStart.go = true
+    //   }, "panelStartStartButton")
+    //
+    // this.panelStart.ceatebutton("Instructions",
+    //   function(){
+    //     document.getElementById("panelStart").style.display = 'none'
+    //     towerGame.panelInstructions = new Panel(this,100,-500, "panelInstructions")
+    //     towerGame.panelInstructions.ceatebutton("Back",
+    //       function(){
+    //         document.getElementById("panelStart").style.display = 'block'
+    //         document.getElementById("panelInstructions").parentNode.removeChild(document.getElementById("panelInstructions"))
+    //       }, "panelInstructionsButton")
+    //   }, "panelStartInstructionButton")
+    //
+    // this.panelStart.ceatebutton("Quit",
+    //   function(){
+    //     towerGame.panelQuit = new Panel(this,100,-500,"panelQuit")
+    //     document.getElementById("panelStart").style.display = 'none'
+    //   }, "panelStartQuitButton")
 
-    this.panelStart.ceatebutton("Start",
-      function(){
-        document.getElementById("panelStart").style.display = 'none'
-        towerGame.panelStart.go = true
-      })
-    this.panelStart.ceatebutton("Instructions",
-      function(){
-        console.log(towerGame)
-        towerGame.panelInstructions = new Panel(this,100,-500, "panelInstructions")
-        document.getElementById("panelStart").style.display = 'none'
-        towerGame.panelInstructions.ceatebutton("Back",
-          function(){
-            document.getElementById("panelStart").style.display = 'block'
-            document.getElementById("panelInstructions").parentNode.removeChild(document.getElementById("panelInstructions"))
-          })
 
-      })
-    this.panelStart.ceatebutton("Quit",
-      function(){
-        towerGame.panelQuit = new Panel(this,100,-500,"panelQuit")
-        document.getElementById("panelStart").style.display = 'none'
-      })
 
 
 
@@ -112,66 +117,64 @@ class Game {
   hideImgElement() { this.style.display = "none"; }
 
   run() { // called from draw()
-    let gt = this.updateGameTime();
-    this.updateInfoElements(gt);
-    this.removeBullets();
-    this.removeEnemies();
-    this.controlWaves()
-    if (this.isRunning) {
-      this.render();
-    }
 
-    // draw the grid
-    for(let i = 0; i < this.cols; i++){
-      for(let j = 0; j < this.rows; j++){
-        this.grid[i][j].render();
-      }
-    }
-     // draw the towers
-    for (let i = 0; i < this.towers.length; i++) {
-      this.towers[i].run();
-    }
-    for (let i = 0; i < this.enemies.length; i++) {
-      this.enemies[i].run();
-    }
-    for (let i = 0; i < this.bullets.length; i++) {
-      this.bullets[i].run();
-    }
-
-    // some help text in the bottom left of the canvas
-    this.context.save();
-    this.context.fillStyle = "white";
-    this.context.font = "14px sans-serif";
-    this.context.fillText("Press the E key to send enemies", 20, this.canvas.height-20);
-    this.context.restore();
-
-    //more panelthings
-    //console.log(this.panelStart)
-    if(this.panelStart){
-      this.panelStart.render()
-    }
-
-    //console.log(this.panelInstructions)
-    if(this.panelInstructions){
-      this.panelInstructions.render()
-    }
-    //console.log(this.panelQuit)
-    if(this.panelQuit){
-      this.panelQuit.render()
-    }
-    // if(!this.panelStart.go){
-    //   this.gameTime = 0
+    this.level.run()
+    // let gt = this.updateGameTime();
+    // this.updateInfoElements(gt);
+    // this.removeBullets();
+    // this.removeEnemies();
+    // this.controlWaves()
+    // if (this.isRunning) {
+    //   this.render();
+    // }
+    //
+    // // draw the grid
+    // for(let i = 0; i < this.cols; i++){
+    //   for(let j = 0; j < this.rows; j++){
+    //     this.grid[i][j].render();
+    //   }
+    // }
+    //  // draw the towers
+    // for (let i = 0; i < this.towers.length; i++) {
+    //   this.towers[i].run();
+    // }
+    // for (let i = 0; i < this.enemies.length; i++) {
+    //   this.enemies[i].run();
+    // }
+    // for (let i = 0; i < this.bullets.length; i++) {
+    //   this.bullets[i].run();
+    // }
+    //
+    // // some help text in the bottom left of the canvas
+    // this.context.save();
+    // this.context.fillStyle = "white";
+    // this.context.font = "14px sans-serif";
+    // this.context.fillText("Press the E key to send enemies", 20, this.canvas.height-20);
+    // this.context.restore();
+    //
+    // //more panelthings
+    // if(this.panelStart){
+    //   this.panelStart.render()
+    // }
+    //
+    // if(this.panelInstructions){
+    //   this.panelInstructions.render()
+    // }
+    //
+    // if(this.panelQuit){
+    //   this.panelQuit.render()
+    // }
+    //
+    // //collision detection
+    // for(var i = 0; i < this.enemies.length; i++){
+    //   for(var j = 0; j < this.bullets.length; j++){
+    //     if(this.circlePointCollision(this.bullets[j].loc.x, this.bullets[j].loc.y, this.enemies[i].loc.x, this.enemies[i].loc.y, this.enemies[i].radius)){
+    //       this.bullets.splice(j, 1);
+    //       this.enemies.splice(i, 1);
+    //     }
+    //   }
     // }
 
-    //collision detection
-    for(var i = 0; i < this.enemies.length; i++){
-      for(var j = 0; j < this.bullets.length; j++){
-        if(this.circlePointCollision(this.bullets[j].loc.x, this.bullets[j].loc.y, this.enemies[i].loc.x, this.enemies[i].loc.y, this.enemies[i].radius)){
-          this.bullets.splice(j, 1);
-          this.enemies.splice(i, 1);
-        }
-      }
-    }
   }
 
   render() { // draw game stuff
@@ -362,7 +365,7 @@ class Game {
 
   updateGameTime(){
     var millis = Date.now();
-    if(millis - this.lastTime >= 1000 && this.panelStart.go) {
+    if(millis - this.lastTime >= 1000 ) {
       this.gameTime++;
       this.lastTime = millis;
     }
