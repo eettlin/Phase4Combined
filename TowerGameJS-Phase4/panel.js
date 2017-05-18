@@ -60,17 +60,17 @@ var panelJSON= [{
       pic: "play.png",
       picId: "play",
       funk: function(){
-        this.game.level= new Level2(this.game)
-        document.getElementById("start").parentNode.removeChild(document.getElementById("start"))
+        towerGame.level= new Level2(towerGame)
+        document.getElementById("firstPanel").parentNode.removeChild(document.getElementById("firstPanel"))
       }
     },{
       name: "Instruction Button",
       id: "instruction",
-      pic: "",
-      picId: "instruction",
+      pic: "wframe.png",
+      picId: "wframe",
       funk: function(){
-        this.game.panelInstructions = new Panel(this, 1)
-        document.getElementById("start").parentNode.removeChild(document.getElementById("start"))
+        towerGame.level.panelInstructions = new Panel(towerGame, 1)
+        document.getElementById("firstPanel").parentNode.removeChild(document.getElementById("firstPanel"))
       }
     },{
       name: "Quit Button",
@@ -78,8 +78,8 @@ var panelJSON= [{
       pic: "exit.png",
       picId: "exit",
       funk: function(){
-        this.game.panelQuit = new Panel(this, 2)
-        document.getElementById("start").parentNode.removeChild(document.getElementById("start"))
+        towerGame.level= new Level3(towerGame)
+        document.getElementById("firstPanel").parentNode.removeChild(document.getElementById("firstPanel"))
       }
     }]
 },{
@@ -94,7 +94,7 @@ var panelJSON= [{
       pic: "back.png",
       picId: "back",
       funk: function(){
-        this.game.panelStart = new Panel(this, 0)
+        towerGame.level.panelStart = new Panel(towerGame, 0)
         document.getElementById("instructionPanel").parentNode.removeChild(document.getElementById("instructionPanel"))
       }
     }]
@@ -107,11 +107,11 @@ var panelJSON= [{
     {
       name: "Replay Button",
       id: "replayButton",
-      pic: "",
-      picId: "replay",
+      pic: "wframe.png",
+      picId: "wframe",
       funk: function(){
-        this.game.panelStart = new Panel(this, 0)
-        this.game.level= new Level1(this.game)
+        towerGame.level.panelStart = new Panel(towerGame, 0)
+        towerGame.level= new Level1(towerGame)
         document.getElementById("endPanel").parentNode.removeChild(document.getElementById("endPanel"))
       }
     },{
@@ -120,16 +120,16 @@ var panelJSON= [{
       pic: "exit.png",
       picId: "exit",
       funk: function(){
-        this.game.panelQuit = new Panel(this, 2)
         document.getElementById("endPanel").parentNode.removeChild(document.getElementById("endPanel"))
+          towerGame.level.panelQuit = new Panel(towerGame, 2)
       }
     },{
       name: "Credits Button",
       id: "creditsButton",
-      pic: "",
-      picId: "credits",
+      pic: "wframe.png",
+      picId: "wframe",
       funk: function(){
-        this.game.panelCredits = new Panel(this, 3)
+        towerGame.level.panelCredits = new Panel(towerGame, 3)
         document.getElementById("endPanel").parentNode.removeChild(document.getElementById("endPanel"))
       }
     }]
@@ -145,7 +145,7 @@ var panelJSON= [{
       pic: "back.png",
       picId: "back",
       funk: function(){
-        this.game.panelQuit = new Panel(this, 2)
+        towerGame.level.panelQuit = new Panel(towerGame, 2)
         document.getElementById("creditesPanel").parentNode.removeChild(document.getElementById("creditesPanel"))
       }
     }]

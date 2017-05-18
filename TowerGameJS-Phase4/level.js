@@ -19,6 +19,7 @@ class Level1 extends Level {
     this.game.canvas.canDiv.style.backgroundImage="url('resources/images/bg.png')"
     this.panelStart = new Panel(this, 0)
     this.panelInstructions = 0
+    this.panelQuit = 0
   }
   run() {
     if(this.panelStart){
@@ -107,6 +108,7 @@ class Level3 extends Level{
     this.game.canvas.canDiv.style.backgroundImage="url('resources/images/bg3.png')"
     this.panelQuit = new Panel(this, 2)
     this.panelCredits = 0
+    this.panelStart = 0
   }
   run() {
     this.game.render()
