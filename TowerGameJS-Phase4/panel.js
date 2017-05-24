@@ -20,15 +20,14 @@ class Panel{
   }
 
   render(){
-    this.temp = this.lerp(this.y,300,.05)
+    this.y = this.slideDown(this.y,300,.05)
     this.panel.style.top = this.y+"px"
-    if(Math.abs(this.temp) >1){
-      this.y = this.temp
-    }
   }
 
-  lerp( a,  b,  f){
-    return a + f * (b - a)
+  slideDown(start, end, incroment){
+    if((incroment*(end-start))>1)
+    return start + incroment * (end - start)
+    return start
   }
 
   createButton(JSON1, i){
