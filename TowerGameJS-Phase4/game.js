@@ -391,7 +391,7 @@ class Game {
   createTileDivs(){
     var tiles = [];
 
-    for(var i = 0; i < 5; i++){
+    for(var i = 0; i < 6; i++){
       var mtd = document.createElement("div"); // createDiv("");
       var h5 = document.createTextNode("Cost");
       var cnvTurImgPath = "resources/images/tow" + (i+1) + "s.png";  // small tower image for canvas
