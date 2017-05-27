@@ -2,8 +2,8 @@ class Enemy {
 
   constructor(game, startCell, randomPath) {
     this.game = game;
-    this.currentCell = startCell;
-    this.loc = startCell.center.copy();
+    this.currentCell = this.game.grid[0][0];
+    this.loc = this.currentCell.center.copy();
     this.randomPath = randomPath;   //boolean to randomize or not
     this.radius = 15.0;
     this.vel = 3.0;       // velocity factor
