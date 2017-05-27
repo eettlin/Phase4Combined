@@ -12,10 +12,12 @@ class Enemy {
     var targetVec = this.target.copy().sub(this.loc);
     this.velVec = targetVec.copy().normalize().scale(this.vel);      // initial velocity vector
     this.kill = false;
+    this.angle=this.velVec.angle()
 
-    this.img = new Image();
-    this.img.src = "resources/images/spritesheets/enemy.png";
-    this.img.addEventListener('error', function() { console.log(this.img.src + " failed to load"); }, false);
+
+     this.img = Enemy.image3;
+
+
   }
 
   run() {
@@ -47,15 +49,13 @@ class Enemy {
   // Enemies with a randomized path are blue and
   // enemies with an optimal path are green
   render() {
-    var ctx = this.game.context;
+    var ctx = this.game.context
+    ctx.save();
 
-
-    if(this.randomPath)
-        ctx.fillStyle = 'blue';
-    else ctx.fillStyle = 'green';
-    ctx.beginPath();
-    ctx.ellipse(this.loc.x, this.loc.y, this.radius, this.radius, 0, 2*Math.PI, false);
-    ctx.fill();
+    ctx.translate(this.loc.x, this.loc.y);
+    ctx.rotate(this.angle + Math.PI/2);
+    ctx.drawImage(this.img, -this.img.width/2, -this.img.height/2);
+    ctx.restore();
   }
 
     // update()
@@ -65,7 +65,7 @@ class Enemy {
     // find a new target and rotate the velocity in the direaction
     // of the new target.
   update() {
-    if(this.loc.dist(this.target) <= this.radius*4) {    // if we have reached the current target
+    if(this.loc.dist(this.target) <= this.vel) {    // if we have reached the current target
         this.currentCell = this.targetCell;
         if(this.currentCell == this.game.root) {   // we have reached the end of the path
             this.kill = true;
@@ -91,6 +91,7 @@ class Enemy {
         // now rotate the current velocity in the direction of the targetAngle
         // a little at a time
         this.velVec.rotate(angleBetween/2);
+        this.angle=this.velVec.angle();
         }
     this.loc.add(this.velVec);          // apply velocity to location
   }
