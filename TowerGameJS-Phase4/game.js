@@ -301,16 +301,21 @@ class Game {
     }
     //check the map to see if there are cells without parents
     validMap() {
-      for(var i = 0; i < this.cols; i++){
-        for(var j = 0; j < this.rows; j++){
-          var cell = this.grid[i][j];
-          if(!cell.parent && !(cell.occupied || cell.hasTower)&& cell!=this.root){
-            return false;
+      if(this.grid[0][0].occupied || this.grid[0][0].hasTower){
+        return false;
+      }
+      else{
+        for(var i = 0; i < this.cols; i++){
+          for(var j = 0; j < this.rows; j++){
+            var cell = this.grid[i][j];
+            if(!cell.parent && !(cell.occupied || cell.hasTower)&& cell!=this.root){
+              return false;
 
+            }
           }
         }
+        return true;
       }
-      return true;
     }
     //undo an invalid map action
     undo(cell,tower) {
