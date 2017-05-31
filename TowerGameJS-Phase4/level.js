@@ -35,6 +35,20 @@ class Level2 extends Level{
   constructor(game) {
     super(game,2)
     this.game.canvas.canDiv.style.backgroundImage="url('resources/images/bg2.png')"
+    this.game.health=100
+    this.game.score=0
+    this.game.bankValue = 500;
+    this.game.gameTime = 0
+    this.game.grid = [];
+    this.game.towers = [];
+    this.game.enemies = [];
+    this.game.bullets = []
+    this.game.cols = Math.floor(this.game.canvas.width / this.game.w);
+    this.game.rows = Math.floor(this.game.canvas.height / this.game.w);
+
+    this.game.loadGrid();
+    this.game.root = this.game.grid[this.game.cols - 1][this.game.rows -1];
+    this.game.brushfire();
   }
   init(){
 

@@ -10,7 +10,7 @@ class Panel{
       this.panel.style.height = 290+"px"
       this.panel.style.backgroundImage = 'url("'+panelJSON[number].pic+'")'
       this.panel.style.position = "absolute"
-      this.panel.align = "center"
+      this.panel.style.align = "center"
       this.panel.style.top = this.y+"px"
       this.panel.style.textAlign = "center"
       this.wrapper = document.getElementById('wrapperDiv').appendChild(this.panel)
@@ -37,7 +37,7 @@ class Panel{
     button.style.height=30+"px"
     button.style.position="relative"
     button.style.top=12+21*i+"%"
-    button.style.left=150+"px"
+    button.style.left = 50+"px"
     button.image = document.createElement("img")
     button.image.id = JSON1.buttonJSON[i].picId
     button.image.src = JSON1.buttonJSON[i].pic
@@ -50,13 +50,13 @@ class Panel{
 var panelJSON= [{
   name: "Start Panel",
   id: "firstPanel",
-  pic: "pan.png",
+  pic: "resources/images/panels/panel.png",
   picId: "pan",
   buttonJSON: [
     {
       name: "Start Button",
       id: "start",
-      pic: "play.png",
+      pic: "resources/images/panels/start.png",
       picId: "play",
       funk: function(){
         towerGame.level= new Level2(towerGame)
