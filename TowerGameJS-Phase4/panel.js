@@ -65,7 +65,7 @@ var panelJSON= [{
     },{
       name: "Instruction Button",
       id: "instruction",
-      pic: "wframe.png",
+      pic: "resources/images/panels/other.png",
       picId: "wframe",
       funk: function(){
         towerGame.level.panelInstructions = new Panel(towerGame, 1)
@@ -74,7 +74,7 @@ var panelJSON= [{
     },{
       name: "Quit Button",
       id: "quitButton",
-      pic: "exit.png",
+      pic: "resources/images/panels/end.png",
       picId: "exit",
       funk: function(){
         towerGame.level= new Level3(towerGame)
@@ -84,7 +84,7 @@ var panelJSON= [{
 },{
   name: "Instruction Panel",
   id: "instructionPanel",
-  pic: "pan.png",
+  pic: "resources/images/panels/panel.png",
   picId: "pan",
   buttonJSON: [
     {
@@ -100,13 +100,13 @@ var panelJSON= [{
 },{
   name: "End Panel",
   id: "endPanel",
-  pic: "pan.png",
+  pic: "resources/images/panels/panel.png",
   picId: "pan",
   buttonJSON: [
     {
       name: "Replay Button",
       id: "replayButton",
-      pic: "wframe.png",
+      pic: "resources/images/panels/restart.png",
       picId: "wframe",
       funk: function(){
         towerGame.level= new Level1(towerGame)
@@ -115,7 +115,7 @@ var panelJSON= [{
     },{
       name: "Quit Button",
       id: "quitButton",
-      pic: "exit.png",
+      pic: "resources/images/panels/end.png",
       picId: "exit",
       funk: function(){
         document.getElementById("endPanel").parentNode.removeChild(document.getElementById("endPanel"))
