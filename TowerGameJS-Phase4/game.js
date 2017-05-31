@@ -49,6 +49,7 @@ class Game {
     this.score = 0;
     this.wave = 0;
     this.health = 100;
+    this.costDiv ='';
     this.canvas = document.createElement("canvas");
     if(!this.canvas || !this.canvas.getContext)
         throw "No valid canvas found!";
@@ -408,6 +409,9 @@ class Game {
       if(info.innerHTML.indexOf('Health') != -1){
         info.innerHTML = 'Health <br/>' + this.health;
       }
+      if(info.innerHTML.indexOf('Cost') != -1){
+        info.innerHTML = 'Cost <br/>'+this.costDiv;
+      }
     }
   }
 
@@ -570,10 +574,12 @@ class Game {
   //+++++++++++++++++++++++++   tile menu callbacks
   tileRollOver() {
     this.style.backgroundColor = '#f7e22a';
+    towerGame.costDiv = ""+this.cost;
   }
 
   tileRollOut() {
     this.style.backgroundColor = '#DDD';
+    towerGame.costDiv = "";
   }
 
   tilePressed() {
@@ -594,6 +600,7 @@ class Game {
   handleCNVMouseOver() {
     if(towerGame.towers.length < 1) return;
     towerGame.towers[towerGame.towers.length-1].visible = true;
+
   }
 
   handleCNVMouseMoved(event) {
