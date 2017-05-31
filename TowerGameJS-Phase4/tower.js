@@ -64,8 +64,10 @@ class Tower {
   }
   findEnemy(){
     for(let i=0;i<this.enemies.length;i++){
-      if(this.enemies[i].loc.dist(this.loc)<this.range){
-        return this.enemies[i]
+      if(this.enemies[i]){
+        if(this.enemies[i].loc.dist(this.loc)<this.range){
+          return this.enemies[i]
+        }
       }
     }
   }

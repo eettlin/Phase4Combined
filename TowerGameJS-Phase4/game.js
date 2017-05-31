@@ -9,15 +9,21 @@ var cellId = 0;
 
 var bsImage;
 var ssImage;
+var load = document.getElementById('loader');
+var wrap;
 
  function loadImages(){
    bsImage = new Image();
   bsImage.src = "resources/images/buttons.png";
    ssImage = new Image();
    ssImage.src = "resources/images/spritesheet.png";
-   window.setTimeout(setup, 100);
+   window.setTimeout(setup, 1500);
  }
 function setup() {
+  wrap = document.getElementById('wrapperDiv');
+  load.style.display = 'none';
+  wrap.style.display = 'block';
+
   towerGame = new Game();
   window.setTimeout(draw, 100);    // wait 100ms for resources to load then start draw loop
 
