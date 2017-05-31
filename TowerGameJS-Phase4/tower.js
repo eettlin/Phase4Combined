@@ -26,7 +26,7 @@ class Tower {
     var ctx = towerGame.context;
     ctx.save();
       ctx.translate(this.loc.x, this.loc.y);
-      ctx.rotate(this.towAngle);
+      ctx.rotate(this.towAngle + Math.PI/2);
       if (this.visible) { //  not visible when first created
         ctx.drawImage(this.towImg, -this.towImg.width/2,-this.towImg.height/2);
         }
@@ -64,7 +64,6 @@ class Tower {
   }
   findEnemy(){
     for(let i=0;i<this.enemies.length;i++){
-      console.log(this.enemies[i]);
       if(this.enemies[i].loc.dist(this.loc)<this.range){
         return this.enemies[i]
       }

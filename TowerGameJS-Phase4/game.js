@@ -1,13 +1,22 @@
 'use strict'
 
 // wait for the window to load and than call back setup()
-window.addEventListener('load', setup, false);
+window.addEventListener('load', loadImages, false);
 
 var towerGame;   // the global game object
 const FRAME_RATE=30;
 var cellId = 0;
 
+var bsImage;
+var ssImage;
 
+ function loadImages(){
+   bsImage = new Image();
+  bsImage.src = "resources/images/buttons.png";
+   ssImage = new Image();
+   ssImage.src = "resources/images/spritesheet.png";
+   window.setTimeout(setup, 100);
+ }
 function setup() {
   towerGame = new Game();
   window.setTimeout(draw, 100);    // wait 100ms for resources to load then start draw loop
@@ -35,6 +44,8 @@ class Game {
     this.bullets = [];
 
     this.bankValue = 500;
+
+    this.loadEnemyImages();
     this.score = 0;
     this.wave = 0;
     this.health = 100;
@@ -45,7 +56,7 @@ class Game {
     this.canvas.height = 750;
     this.canvas.canDiv=document.getElementById('canDiv')
     this.canvas.canDiv.appendChild(this.canvas);
-    
+
 
     this.context = this.canvas.getContext("2d");
     if(!this.context)
@@ -68,12 +79,10 @@ class Game {
 
     this.mouseX = 0;
     this.mouseY = 0;
-    this.w = 20;
+    this.w = 50;
     this.done = false;
     this.level= new Level1(this)
     //panelthings
-    this.panelStart = new Panel(this, 100,-500,"panelStart")
-    this.panelStart.createButtons()
     // this.panelStart.ceatebutton("Start",
     //   function(){
     //     document.getElementById("panelStart").style.display = 'none'
@@ -109,7 +118,43 @@ class Game {
     this.loadGrid();
     this.root = this.grid[this.cols - 1][this.rows -1];
     this.brushfire();
-}
+    this.loadWallImage();
+  }
+  //load wall stuff
+  loadWallImage(){
+    // grab the wall image from the buttons stprite sheet
+   var propName =  "B60000";
+   var f = buttonsJSON.frames[propName].frame;
+   createImageBitmap(bsImage, f.x, f.y, f.w, f.h).then(function(wallImage){
+     console.log(wallImage);
+     Cell.wallImage = wallImage;
+     //console.log(f);
+   },
+    function(){
+      alert('failed to make wallImage');
+    });
+
+  }
+
+
+  loadEnemyImages(){
+    var enemyData = [];
+
+    for (var i = 1; i <= 6; i++){
+      var propName = "E" + i + "0000";
+      var f = json.frames[propName].frame;
+      enemyData.push(createImageBitmap(ssImage, f.x, f.y, f.w, f.h));
+    }
+
+      Promise.all(enemyData).then(function(enemies){
+        Enemy.image1 = enemies[0];
+        Enemy.image2 = enemies[1];
+        Enemy.image3 = enemies[2];
+        Enemy.image4 = enemies[3];
+        Enemy.image5 = enemies[4];
+        Enemy.image6 = enemies[5];
+      });
+   }
 
   // The success callback when a tower canvas image
   // or bullet image has loaded.  Hide them from
@@ -256,16 +301,21 @@ class Game {
     }
     //check the map to see if there are cells without parents
     validMap() {
-      for(var i = 0; i < this.cols; i++){
-        for(var j = 0; j < this.rows; j++){
-          var cell = this.grid[i][j];
-          if(!cell.parent && !(cell.occupied || cell.hasTower)&& cell!=this.root){
-            return false;
+      if(this.grid[0][0].occupied || this.grid[0][0].hasTower){
+        return false;
+      }
+      else{
+        for(var i = 0; i < this.cols; i++){
+          for(var j = 0; j < this.rows; j++){
+            var cell = this.grid[i][j];
+            if(!cell.parent && !(cell.occupied || cell.hasTower)&& cell!=this.root){
+              return false;
 
+            }
           }
         }
+        return true;
       }
-      return true;
     }
     //undo an invalid map action
     undo(cell,tower) {
@@ -296,9 +346,7 @@ class Game {
         var row, col, startCell, i, j;
         for( i = 0; i < numEnemies; i++) {
             for(j = 0; j < 3; j++) { // try 3 times to find valid start cell
-                let row = Math.floor(Math.random() * (this.rows/2));    // top  half of rows
-                let col = Math.floor(Math.random() * this.cols);        // any column
-                startCell = this.grid[col][row];
+                startCell = this.grid[0][0];
                 if(startCell && startCell.parent)   // must have a parent to have any path
                     break;
                 }
@@ -384,7 +432,29 @@ class Game {
 
   }  // ++++++++++++++++++++++++++++++++++++++++++++++  End LoadGrid
 
+  createTowerBitmaps(ssImage, mtd, index){
+      if (!ssImage || !bsImage.complete){
+          alert("Images not loaded");
+          // quit code
+      }
+      var propertyName = "T" + (index+1) + "0000";
+      var frame = json.frames[propertyName].frame;
+      var bulletPropertyName = "p" + (index+1) + "0000";
+      var bulletFrame = json.frames[bulletPropertyName].frame;
+      //cool stuff
+      Promise.all([
+        createImageBitmap(ssImage, frame.x, frame.y, frame.w, frame.h),
+        createImageBitmap(ssImage, bulletFrame.x, bulletFrame.y, bulletFrame.w, bulletFrame.h)
+      ])
+        .then(
+          function(bmps){
+            mtd.cnvTurImg = bmps[0];
+            mtd.cnvBulImg = bmps[1];
+        }, function(){
+          alert("Error in creating bitmap");
+        });
 
+    }
 
   // Create the divs to hold the menu of towers with
   // the large images.  This divs also contain the
@@ -392,9 +462,12 @@ class Game {
   // canvas.
   createTileDivs(){
     var tiles = [];
-
+    var buttons = ["B10000", "B20000", "B30000", "B40000", "B50000", "B60000"];
+    //  loop through the towers and DO NOT include wall element
     for(var i = 0; i < 5; i++){
       var mtd = document.createElement("div"); // createDiv("");
+
+      /*
       var h5 = document.createTextNode("Cost");
       var cnvTurImgPath = "resources/images/tow" + (i+1) + "s.png";  // small tower image for canvas
       var cnvBulImgPath = "resources/images/b" + (i+1) + ".png";     // bullet image for canvas
@@ -407,6 +480,20 @@ class Game {
       mtd.cnvBulImg.addEventListener('load',this.hideImgElement,false);
       mtd.cnvBulImg.addEventListener('error', function() { console.log(cnvBulImgPath + " failed to load"); }, false);
       mtd.cnvBulImg.src = cnvBulImgPath;    // start loading image
+      */
+      var b = buttons[i];
+      var button = buttonsJSON.frames[b].frame;
+
+      var innerDiv = document.createElement("div");
+      innerDiv.id = "innerDiv" + i;
+      innerDiv.style.width = "90px";
+      innerDiv.style.height = "100px";
+       // Not using imageBitmaps for the buttons
+       // As they are not on the canvas
+      innerDiv.style.backgroundImage = "url(resources/images/buttons.png)";
+      innerDiv.style.backgroundPosition = `${-button.x}px ${-button.y}px`;
+      innerDiv.style.margin = "5px";
+      mtd.appendChild(innerDiv);
 
       document.getElementById("menuDiv").appendChild(mtd);
 
@@ -414,11 +501,7 @@ class Game {
       mtd.cost = 100*i +50;
       mtd.id = 'towImgDiv' + i;
       tiles.push(mtd);
-      var imgName = 'resources/images/tow' + i + '.png'; // large image for menu tile
-      var tImg = new Image();
-      tImg.addEventListener('error', function() { console.log(imgName + " failed to load"); }, false);
-      tImg.src = imgName;
-      mtd.appendChild(tImg);
+      this.createTowerBitmaps(ssImage, mtd,i)
 
     }
     return tiles;
