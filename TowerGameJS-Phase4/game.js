@@ -331,6 +331,7 @@ class Game {
           cell.hasTower=false;
           towerGame.towers.splice(towerGame.towers.indexOf(tower))
           alert("you cannot place a tower here")
+          towerGame.bankValue = towerGame.bankValue + tower.cost;
         }
       }else{
         return function() {
