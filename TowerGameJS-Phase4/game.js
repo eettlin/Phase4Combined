@@ -492,6 +492,7 @@ class Game {
       mtd.cnvBulImg.addEventListener('error', function() { console.log(cnvBulImgPath + " failed to load"); }, false);
       mtd.cnvBulImg.src = cnvBulImgPath;    // start loading image
       */
+
       var b = buttons[i];
       var button = buttonsJSON.frames[b].frame;
 
@@ -513,6 +514,7 @@ class Game {
       mtd.id = 'towImgDiv' + i;
       tiles.push(mtd);
       this.createTowerBitmaps(ssImage, mtd,i)
+      mtd.setAttribute('title', 'Cost = '+mtd.cost);
 
     }
     return tiles;
