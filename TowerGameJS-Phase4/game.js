@@ -633,11 +633,12 @@ class Game {
     if(towerGame.placingTower && towerGame.canAddTower(cell)){
       towerGame.placeTower(cell);
     }
-    else if(!towerGame.placingTower && !cell.hasTower) {
+    else if(!towerGame.placingTower && !cell.hasTower && towerGame.bankValue >= 5) {
         // toggle the occupied property of the clicked cell
         cell.occupied = !cell.occupied;
         towerGame.brushfire(towerGame.undo(cell));   // all new distances and parents
         towerGame.bankValue = towerGame.bankValue - 5;
+
         }
   }
 
