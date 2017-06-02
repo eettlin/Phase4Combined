@@ -635,6 +635,7 @@ class Game {
         // toggle the occupied property of the clicked cell
         cell.occupied = !cell.occupied;
         towerGame.brushfire(towerGame.undo(cell));   // all new distances and parents
+        towerGame.bankValue = towerGame.bankValue - 5;
         }
   }
 
