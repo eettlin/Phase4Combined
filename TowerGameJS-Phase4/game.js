@@ -62,6 +62,7 @@ class Game {
     this.canvas.height = 750;
     this.canvas.canDiv=document.getElementById('canDiv')
     this.canvas.canDiv.appendChild(this.canvas);
+    this.paused = false;
 
 
     this.context = this.canvas.getContext("2d");
@@ -125,6 +126,8 @@ class Game {
     this.root = this.grid[this.cols - 1][this.rows -1];
     this.brushfire();
     this.loadWallImage();
+    var button = document.getElementById('pauseButton');
+    button.addEventListener('click', this.pause, false);
   }
   //load wall stuff
   loadWallImage(){
@@ -169,7 +172,10 @@ class Game {
 
   run() { // called from draw()
 
+
+    if (!this.paused){
     this.level.run()
+  } 
     // let gt = this.updateGameTime();
     // this.updateInfoElements(gt);
     // this.removeBullets();
@@ -424,6 +430,10 @@ class Game {
       this.lastTime = millis;
     }
     return this.gameTime;
+  }
+
+  pause(){
+    towerGame.paused = !towerGame.paused;
   }
 
    // +++++++++++++++++++++++++++++++++++++++++++  load a 2D array with cells
